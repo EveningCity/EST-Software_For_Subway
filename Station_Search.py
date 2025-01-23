@@ -40,7 +40,7 @@ for servel in station_name:
     if len(servel) == 2:
         servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0])} | {Producer.ruleText.betterEnglish(servel[1])}")
     else: 
-        servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split("1tc1")[0])} {Producer.ruleText.betterChinese(servel[2])} | {Producer.ruleText.betterEnglish(servel[1].split("1te1")[0])} ({Producer.ruleText.betterEnglish(servel[3])})")
+        servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split('1tc1')[0])} {Producer.ruleText.betterChinese(servel[2])} | {Producer.ruleText.betterEnglish(servel[1].split('1te1')[0])} ({Producer.ruleText.betterEnglish(servel[3])})")
 
 
 def fuzzy_search(query, choices):

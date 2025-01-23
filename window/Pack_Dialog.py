@@ -90,7 +90,7 @@ class pack_dialog(QtWidgets.QDialog):
             for pack_name in files_name_list:
                 
                 if self.getUUID(Producer.route.resourcePath(f"pack/{pack_name}")) == self.getUUID(Producer.route.resourcePath("data/Data.py")):
-                    pack.setText(f"当前使用的资源包是 {self.getPackName(Producer.route.resourcePath(f"pack/{pack_name}"))}")  
+                    pack.setText(f"当前使用的资源包是 {self.getPackName(Producer.route.resourcePath(f'pack/{pack_name}'))}")  
                     break
                 else:
                     pack.setText("未使用任何资源包")

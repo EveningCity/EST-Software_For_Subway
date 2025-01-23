@@ -6,7 +6,7 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtGui import QPixmap, QIcon
 
 import Producer
-from window import Plan_Dialog, Search_Dialog, Select_Route, Main_Error as Error, Pack_Dialog
+from window import Plan_Dialog, Search_Dialog, Select_Route, Main_Error as Error, Pack_Dialog, Setting
 
 
 ERROR = "请先关闭当前除主窗口外的所有窗口"
@@ -21,7 +21,6 @@ class main(QtWidgets.QDialog):
         
         self.ui.plus.clicked.connect(self.scroll_plus)
         self.ui.cut.clicked.connect(self.scroll_cut)
-        self.ui.clear.clicked.connect(self.clearAll)
 
         # 添加广告内容
         self.covers = [
@@ -40,48 +39,34 @@ class main(QtWidgets.QDialog):
         self.ui.plan.clicked.connect(self.Plan)
         self.ui.search.clicked.connect(self.Search)
         self.ui.pack.clicked.connect(self.Pack)
+        self.ui.setting.clicked.connect(self.Settings)
         self.setObjectName("Main")
         
         
+    def Settings(self):
+        
+        self.clearAll()
+        Setting.setting_dialog().show()
+        
     def Route(self):
-        global JUDGE
-        if JUDGE == False:
-            JUDGE = True
-            Select_Route.select_route().show()
-        else:
-            errorWindow = Error.error()
-            errorWindow.show()
-            ctypes.windll.user32.MessageBeep(0x00000010)
+
+        self.clearAll()
+        Select_Route.select_route().show()
             
     def Plan(self):
-        global JUDGE
-        if JUDGE == False:
-            JUDGE = True
-            Plan_Dialog.plan_dialog().show()
-        else:
-            errorWindow = Error.error()
-            errorWindow.show()
-            ctypes.windll.user32.MessageBeep(0x00000010)
+
+        self.clearAll()
+        Plan_Dialog.plan_dialog().show()
         
     def Search(self):
-        global JUDGE
-        if JUDGE == False:
-            JUDGE = True
-            Search_Dialog.search_dialog().show()
-        else:
-            errorWindow = Error.error()
-            errorWindow.show()
-            ctypes.windll.user32.MessageBeep(0x00000010)
+
+        self.clearAll()
+        Search_Dialog.search_dialog().show()
             
     def Pack(self):
-        global JUDGE
-        if JUDGE == False:
-            JUDGE = True
-            Pack_Dialog.pack_dialog().show()
-        else:
-            errorWindow = Error.error()
-            errorWindow.show()
-            ctypes.windll.user32.MessageBeep(0x00000010)
+        
+        self.clearAll()
+        Pack_Dialog.pack_dialog().show()
             
     def scroll_plus(self):
         if self.num < len(self.covers) - 1:

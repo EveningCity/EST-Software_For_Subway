@@ -476,7 +476,7 @@ QPushButton:pressed {
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_8">
             <item>
-             <widget class="QPushButton" name="clear">
+             <widget class="QPushButton" name="setting">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -524,7 +524,7 @@ QPushButton:pressed {
                <string notr="true">color: rgb(153,141,168);</string>
               </property>
               <property name="text">
-               <string>关闭窗口</string>
+               <string>版本设置</string>
               </property>
               <property name="textFormat">
                <enum>Qt::AutoText</enum>

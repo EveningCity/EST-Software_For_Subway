@@ -1,6 +1,6 @@
 import importlib
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QSizePolicy, QApplication, QMainWindow
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QSizePolicy, QApplication, QMainWindow, QLabel
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
@@ -85,6 +85,17 @@ class select_route(QtWidgets.QDialog):
                 self.routes.append([num, servel_route])
                 
                 num = num + 1
+                
+            else:
+            
+                self.p_layout.setAlignment(Qt.AlignCenter)
+                
+                p_text = QLabel()
+                p_text.setText("未找到匹配项，请检查输入或尝试其他查询")  
+                p_text.setFont(QFont("黑体", 12))
+                p_text.setAlignment(Qt.AlignCenter) 
+                p_text.setMinimumSize(60, 30)  
+                self.p_layout.addWidget(p_text)
                 
                 
     def afterClick(self, button_number):
