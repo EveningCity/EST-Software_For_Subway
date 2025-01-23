@@ -1,8 +1,11 @@
 import hashlib
+import importlib
+import json
 import os
 import shutil
 from tkinter import filedialog
 import tkinter
+import zipfile
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout, QApplication, QHBoxLayout, QFrame, QSizePolicy
 from PyQt5.QtGui import QFont
@@ -10,15 +13,20 @@ from PyQt5.QtCore import Qt
 
 import Producer
 import Station_Search
-from window import Pack_Error
+from window import Pack_Error, Sure_Json_Pack
 import window.Main as Main
-import window.Sure_Pack as Sure_Pack
 import window.Sure_Delete_Pack as Sure_Delete_Pack
 
 
 KEYED = ""
 NAME = None
 ERROR = None
+
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 class pack_dialog(QtWidgets.QDialog):
     
@@ -81,20 +89,21 @@ class pack_dialog(QtWidgets.QDialog):
             
             for pack_name in files_name_list:
                 
-                if self.getFileMd5(Producer.route.resourcePath(f"pack/{pack_name}")) == self.getFileMd5(Producer.route.resourcePath("data/Data.py")):
-                    pack.setText(f"当前使用的资源包是 {pack_name}")  
+                if self.getUUID(Producer.route.resourcePath(f"pack/{pack_name}")) == self.getUUID(Producer.route.resourcePath("data/Data.py")):
+                    pack.setText(f"当前使用的资源包是 {self.getPackName(Producer.route.resourcePath(f"pack/{pack_name}"))}")  
                     break
                 else:
-                    pack.setText("未使用任何资源包")  
+                    pack.setText("未使用任何资源包")
                     
             for pack_name in result:
                 
-                if self.getFileMd5(Producer.route.resourcePath(f"pack/{pack_name}")) != self.getFileMd5(Producer.route.resourcePath("data/Data.py")):
+                if self.getUUID(Producer.route.resourcePath(f"pack/{pack_name}")) != self.getUUID(Producer.route.resourcePath("data/Data.py")):
+                        
                     every_layout = QHBoxLayout()
                     self.pack_layout.addLayout(every_layout, 2)
                     
                     pack = QPushButton(f"Pack{btn_number}")
-                    pack.setText(pack_name)  
+                    pack.setText(self.getPackName(Producer.route.resourcePath(f"pack/{pack_name}")))  
                     pack.setFont(QFont("黑体", 12))
                     pack.setMinimumSize(60, 30)  
                     pack.setStyleSheet("""
@@ -176,9 +185,14 @@ class pack_dialog(QtWidgets.QDialog):
         
     def afterButtonClick(self, button_number):
         
-        Sure_Pack.TEXT = "您确定要更换资源包？如确定所有窗口将会关闭"
-        Sure_Pack.BTN = button_number
-        Sure_Pack.sure().show()
+        for name in self.names:
+            if name[0] == button_number:
+                file = Producer.route.resourcePath(f"pack/{name[1]}")
+                
+        if file.endswith(".zip"):
+            Sure_Json_Pack.TEXT = "您确定要更换资源包？如确定窗口将会重启"
+            Sure_Json_Pack.BTN = button_number
+            Sure_Json_Pack.sure().show()
                 
     
     def afterDeleteClick(self, button_number):
@@ -207,8 +221,30 @@ class pack_dialog(QtWidgets.QDialog):
             if widget:
                 widget.deleteLater()  
             else:
-                self.clearLayout(item.layout())  
-           
+                self.clearLayout(item.layout()) 
+                
+    
+    def getUUID(self, file_path):
+        
+        if file_path.endswith(".zip"):
+            with zipfile.ZipFile(Producer.route.resourcePath(file_path),"r") as zip:
+                with zip.open("data.json") as file:
+                    data = json.load(file)
+                    return(data.get("uuid"))
+        elif file_path.endswith(".py"):
+            file = load(os.path.basename(file_path), file_path)
+            return(file.UUID)
+        
+    def getPackName(self, file_path):
+        
+        if file_path.endswith(".zip"):
+            with zipfile.ZipFile(Producer.route.resourcePath(file_path),"r") as zip:
+                with zip.open("data.json") as file:
+                    data = json.load(file)
+                    return(data.get("pack_name"))
+        elif file_path.endswith(".py"):
+            file = load(os.path.basename(file_path), file_path)
+            return(file.NAME)
                 
     def closeEvent(self, event):
         Main.JUDGE = False  
@@ -223,7 +259,7 @@ class pack_dialog(QtWidgets.QDialog):
             
             file_path = filedialog.askopenfilename(
                 title="选择文件",
-                filetypes=[("Python Files", "*.py")])
+                filetypes=[("Zip Files", "*.zip")])
             
             if not file_path:
                 return

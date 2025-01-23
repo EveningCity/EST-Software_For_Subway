@@ -1,8 +1,9 @@
 import importlib
 import itertools
+import os
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QLabel, QVBoxLayout, QFrame, QSizePolicy, QGroupBox, QHBoxLayout
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtCore import Qt
 
 import Producer, window.Plan_Dialog as Plan_Dialog, window.Route_Dialog as Route_Dialog
@@ -29,14 +30,15 @@ class searched_route_dialog(QtWidgets.QDialog):
         super().__init__()
         self.searchedDialog = uic.loadUi(Producer.route.resourcePath("window/ui/searched_dialog.ui"), self)
         
-        self.searchedDialog.nameChinese.setText(self.splitStringLine(Route_Dialog.ROUTE_NAME)[0])
-        self.searchedDialog.nameEnglish.setText(self.splitStringUnderline(self.splitStringLine(Route_Dialog.ROUTE_NAME)[1]))
+        self.searchedDialog.nameChinese.setText(Producer.ruleText.betterChinese(Route_Dialog.ROUTE_NAME[0]))
+        self.searchedDialog.nameEnglish.setText(Producer.ruleText.betterEnglish(Route_Dialog.ROUTE_NAME[1]))
+        self.subTitle(Route_Dialog.ROUTE_NAME)
         
         self.number_1.setAlignment(Qt.AlignCenter)
         self.number_1.setSpacing(6)
         self.number_2.setAlignment(Qt.AlignCenter)
         self.number_2.setSpacing(6)
-        self.numberSet(self.splitStringLine(Route_Dialog.ROUTE_NAME)[0])
+        self.numberSet(Route_Dialog.ROUTE_NAME[0])
         
         self.searchedDialog.start.clicked.connect(self.startClicked)
         self.searchedDialog.end.clicked.connect(self.endClicked)
@@ -45,14 +47,18 @@ class searched_route_dialog(QtWidgets.QDialog):
         self.scroll_layout.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.searchedDialog.scrollArea.widget().setLayout(self.scroll_layout)
 
-        self.addRouteText()
+        self.addText("线路概览")
         self.addRouteView()
+        self.addAir()
+        self.addText("车站信息")
+        self.addstationView()
+        self.loadPic()
         
         
-    def addRouteText(self):
+    def addText(self, word):
             
-        route_text = QLabel("Route")
-        route_text.setText("线路概览")
+        route_text = QLabel("Text")
+        route_text.setText(word)
         route_text.setFont(QFont("黑体", 16))
         route_text.setAlignment(Qt.AlignLeft)
         self.scroll_layout.addWidget(route_text)
@@ -70,7 +76,7 @@ class searched_route_dialog(QtWidgets.QDialog):
         
         num = 0
         
-        for servel_route in Producer.route.stationRouteServel(self.splitStringLine(Route_Dialog.ROUTE_NAME)[0]):
+        for servel_route in Producer.route.stationRouteServel(Route_Dialog.ROUTE_NAME[0]):
             
             route = QLabel(f"Route{num}")
             route.setText(f" {Producer.ruleText.formatLineList([servel_route])[0]} ")
@@ -100,6 +106,36 @@ class searched_route_dialog(QtWidgets.QDialog):
             self.routeDescription(servel_route, num)
             
             num = num + 1
+            
+            
+    def addstationView(self):
+        
+        name = Route_Dialog.ROUTE_NAME[1]
+        for des in Data.DESCRIPTION:
+            if des[0] == name:
+                n = QLabel("Station")
+                n.setText(des[1])  
+                n.setFont(QFont("黑体", 12))
+                n.setAlignment(Qt.AlignLeft)
+                n.setWordWrap(True)
+                self.scroll_layout.addWidget(n)
+                
+                
+    def addAir(self):
+        
+        a = QLabel("Air")
+        a.setText(" ")
+        self.scroll_layout.addWidget(a)
+        
+        
+    def subTitle(self, lst):
+        
+        if len(lst) != 3:
+            self.searchedDialog.subNameChinese.setText(Producer.ruleText.betterChinese(lst[3]))
+            self.searchedDialog.subNameEnglish.setText(f"({Producer.ruleText.betterEnglish(lst[4])})")
+        else:
+            self.searchedDialog.subNameChinese.setText(" ")
+            self.searchedDialog.subNameEnglish.setText(" ")
         
     
     def routeDescription(self, route, Times):
@@ -119,32 +155,56 @@ class searched_route_dialog(QtWidgets.QDialog):
     def startClicked(self):
         
         global STATION_START
-        STATION_START = self.splitStringLine(Route_Dialog.ROUTE_NAME)[0]
+        STATION_START = Route_Dialog.ROUTE_NAME[0]
         Plan_Dialog.plan_dialog().show()
         
         
     def endClicked(self):
         
         global STATION_END
-        STATION_END = self.splitStringLine(Route_Dialog.ROUTE_NAME)[0]
+        STATION_END = Route_Dialog.ROUTE_NAME[0]
         Plan_Dialog.plan_dialog().show()
-     
-     
-    def splitStringLine(self, input):
         
-        list = input.split(" | ")
-        result = [item.strip() for item in list]
         
-        return result
-    
-    
-    def splitStringUnderline(self, input):
+    def loadPic(self):
         
-        list = input.split("_")
-        result = '/'.join([item.strip() for item in list])
-        
-        return result
+        files_name_list = []
+        for filename in os.listdir(Producer.route.resourcePath("data/stations/")):
+            file_path = os.path.join(Producer.route.resourcePath("data/stations/"), filename)
+            if os.path.isfile(file_path):
+                files_name_list.append(filename)
+            if filename.replace(".png", "").replace(".jpg", "").replace(".jpeg", "")  == Route_Dialog.ROUTE_NAME[1]:
+                self.label = QLabel()
+                self.label.setAlignment(Qt.AlignCenter)
+                self.label.setWordWrap(True)
+                self.pixmap = QPixmap(file_path)
+                self.scroll_layout.addWidget(self.label)
+                
            
+    def updateImageSize(self):
+        """根据窗口大小调整图片大小"""
+            
+        try:
+            # 获取窗口的可用宽度和高度
+            window_width = self.searchedDialog.scrollArea.width() - 40
+            window_height = self.height()
+
+            # 计算图片的最大显示尺寸，保持宽高比
+            scaled_pixmap = self.pixmap.scaled(window_width, window_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            self.label.setPixmap(scaled_pixmap)
+        except:
+            return
+           
+                
+    def resizeEvent(self, event):
+        """重写窗口大小改变事件"""
+        
+        try:
+            super().resizeEvent(event)
+            self.updateImageSize()  # 更新图片大小  
+        except:
+            return
+
        
     def numberSet(self, name):
         

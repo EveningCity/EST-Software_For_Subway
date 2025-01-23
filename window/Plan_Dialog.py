@@ -1,4 +1,5 @@
 import ctypes
+import itertools
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QFont
@@ -30,31 +31,31 @@ class plan_dialog(QtWidgets.QDialog):
         global END_DATA, START_DATA
         
         if Searched_of_Start_Dialog.STATION != None:
-            self.planDialog.startText.setText(Searched_of_Start_Dialog.STATION)
+            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Start_Dialog.STATION))
             Searched_of_Start_Dialog.STATION = None
         elif Searched_of_End_Dialog.START_DATA != None:
-            self.planDialog.startText.setText(Searched_of_End_Dialog.START_DATA)
+            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_End_Dialog.START_DATA))
             Searched_of_End_Dialog.START_DATA = None
             START_DATA = None
         elif Searched_of_Search_Dialog.STATION_START != None:
-            self.planDialog.startText.setText(Searched_of_Search_Dialog.STATION_START)
+            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Search_Dialog.STATION_START))
             Searched_of_Search_Dialog.STATION_START = None
         elif Searched_of_Route_Dialog.STATION_START != None:
-            self.planDialog.startText.setText(Searched_of_Route_Dialog.STATION_START)
+            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Route_Dialog.STATION_START))
             Searched_of_Route_Dialog.STATION_START = None
         
         if Searched_of_End_Dialog.STATION != None:
-            self.planDialog.endText.setText(Searched_of_End_Dialog.STATION)
+            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_End_Dialog.STATION))
             Searched_of_End_Dialog.STATION = None
         elif Searched_of_Start_Dialog.END_DATA != None:
-            self.planDialog.endText.setText(Searched_of_Start_Dialog.END_DATA)
+            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Start_Dialog.END_DATA))
             Searched_of_Start_Dialog.END_DATA = None
             END_DATA = None
         elif Searched_of_Search_Dialog.STATION_END != None:
-            self.planDialog.endText.setText(Searched_of_Search_Dialog.STATION_END)
+            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Search_Dialog.STATION_END))
             Searched_of_Search_Dialog.STATION_END = None
         elif Searched_of_Route_Dialog.STATION_END != None:
-            self.planDialog.endText.setText(Searched_of_Route_Dialog.STATION_END)
+            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Route_Dialog.STATION_END))
             Searched_of_Route_Dialog.STATION_END = None
         
             
@@ -92,6 +93,15 @@ class plan_dialog(QtWidgets.QDialog):
         Start = self.planDialog.startText.text()
         End = self.planDialog.endText.text()
         
+        if Producer.route.begin(Start,End) != Producer.passCode.PASS001:
+            if Producer.route.begin(Start.replace(" ","1tc1"),End) == Producer.passCode.PASS001:
+                Start = Start.replace(" ","1tc1")
+            if Producer.route.begin(Start,End.replace(" ","1tc1")) == Producer.passCode.PASS001:
+                End = End.replace(" ","1tc1")
+            if Producer.route.begin(Start.replace(" ","1tc1"),End.replace(" ","1tc1")) == Producer.passCode.PASS001:
+                Start = Start.replace(" ","1tc1")
+                End = End.replace(" ","1tc1")
+                
         # 检查输入
         if Producer.route.begin(Start,End) != Producer.passCode.PASS001:
             # 创建一个错误消息框

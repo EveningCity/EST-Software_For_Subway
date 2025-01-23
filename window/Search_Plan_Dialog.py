@@ -1,3 +1,4 @@
+import itertools
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout
 from PyQt5.QtGui import QFont
@@ -32,7 +33,13 @@ class search_plan_dialog(QtWidgets.QDialog):
     def afterClick(self):
         
         query = self.searchDialog.searchText.text()
-        result = Station_Search.fuzzy_search(query, Station_Search.station_name)
+        result = Station_Search.fuzzy_search(query, [item[2] for item in Station_Search.station_name])
+        res_lst = []
+        
+        for res,lst in itertools.product(result, Station_Search.station_name):
+            
+            if res in lst:
+                res_lst.append(lst)
         
         if self.num != 0:
             self.clearLayout(self.p_layout)
@@ -47,10 +54,10 @@ class search_plan_dialog(QtWidgets.QDialog):
             
             self.p_layout.setAlignment(Qt.AlignTop)
             
-            for station_name in result:
+            for station_name in res_lst:
                 
                 button = QPushButton(f"Button{btn_number}")
-                button.setText(station_name.replace("_", "/"))  
+                button.setText(station_name[2])
                 button.setFont(QFont("等线", 12))
                 button.setMinimumSize(60, 30)  
                 button.setStyleSheet("""

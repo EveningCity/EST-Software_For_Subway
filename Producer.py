@@ -42,11 +42,9 @@ for attribute in dir(Data.Station):
         ))
 
 station_name = []
-station_route_number = []
 
 for stations in station:
     station_name.append(stations[-1])
-    
     
     
 class ruleText:
@@ -85,47 +83,48 @@ class ruleText:
             
         return rgb_str
         
-        
+    
     def betterEnglish(t):
         """对英文名称进行适当的修改"""
         
         result = ""
+        for i in range(len(t)):
+            
+            # 将当前字符添加到结果字符串中
+            result += t[i]
+            # 如果当前字符是小写字母，并且下一个字符是大写字母
+            # 则在它们之间加上空格
+            if i < len(t) - 1 and t[i].islower() and t[i + 1].isupper():
+                result += " "
+                
+        result = result.split("1te1")[0]
+        result = result.replace("1o1", " ").replace("_", "/").replace("1so1", "'s").replace("1si1", "s'").replace("1te1", "")
+        return result   
+    
+    
+    def betterChinese(t):
+        """对中文名称进行适当的修改"""
         
-        if t == "APFU":
-            result = "Anping Financial University"
+        result = ""
+        for i in range(len(t)):
             
-        elif t == "HLS":
-            result = "Harmony South Railway Station"
-            
-        elif t == "HLN":
-            result = "Harmony North Railway Station"
-            
-        elif t == "HLE":
-            result = "Harmony East Railway Station"
-            
-        elif t == "SRGEXPO":
-            result = "SRG EXPO"
-            
-        elif t == "FredsBeach":
-            result = "Fred's Beach"
-            
-        elif t == "HLIntlAirport":
-            result = "Huanglong International Airport"
-            
-        elif t == "SYIntlAirport":
-            result = "Sangyuan International Airport"
-            
-        else:
-            for i in range(len(t)):
-                
-                # 将当前字符添加到结果字符串中
-                result += t[i]
-                # 如果当前字符是小写字母，并且下一个字符是大写字母
-                # 则在它们之间加上空格
-                if i < len(t) - 1 and t[i].islower() and t[i + 1].isupper():
-                    result += " "
-                
-        return result    
+            # 将当前字符添加到结果字符串中
+            result += t[i]
+            # 如果当前字符是小写字母，并且下一个字符是大写字母
+            # 则在它们之间加上空格
+            if i < len(t) - 1 and t[i].islower() and t[i + 1].isupper():
+                result += " "
+        
+        result = result.split("1tc1")[0]
+        result = result.replace("1o1", " ").replace("_", "/").replace("1so1", "'s").replace("1si1", "s'").replace("1tc1", "").replace("1h1","-")
+        return result   
+    
+    
+    def better(t):
+        """专用改动"""
+
+        result = t.replace("1tc1"," ")
+        return result
     
     
     def planName(n):

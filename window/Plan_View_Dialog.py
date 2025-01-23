@@ -83,7 +83,7 @@ class planView(QtWidgets.QDialog):
                 groupBoxLayout.addLayout(nameLayout)
         
                 servelStationName = QLabel(f"Label{btn_number}")
-                servelStationName.setText(stationName)
+                servelStationName.setText(Producer.ruleText.better(stationName))
                 servelStationName.setFont(QFont("黑体", 12))
                 nameLayout.addWidget(servelStationName)
                 nameLayout.addWidget(self.routeButton(route))

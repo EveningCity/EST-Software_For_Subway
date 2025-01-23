@@ -21,6 +21,7 @@ class main(QtWidgets.QDialog):
         
         self.ui.plus.clicked.connect(self.scroll_plus)
         self.ui.cut.clicked.connect(self.scroll_cut)
+        self.ui.clear.clicked.connect(self.clearAll)
 
         # 添加广告内容
         self.covers = [
@@ -103,3 +104,10 @@ class main(QtWidgets.QDialog):
     def closeEvent(self, event):
         event.accept()
         sys.exit()
+        
+    def clearAll(self):
+        global JUDGE
+        JUDGE = False  
+        for window in QApplication.topLevelWidgets():
+            if window.objectName() != "Main":
+                window.deleteLater()

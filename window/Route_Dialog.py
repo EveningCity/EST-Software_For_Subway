@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QLabel, QSizePolicy, QAppl
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
+import Station_Search
 import window.Searched_of_Search_Dialog as Searched_of_Search_Dialog, Producer, window.Searched_of_Route_Dialog as Searched_of_Route_Dialog, window.Select_Route as Select_Route
 from window import Plan_View_Dialog, Main
 
@@ -70,9 +71,9 @@ class route_dialog(QtWidgets.QDialog):
         for station_name in result:
             
             button = QPushButton(f"StationButton{btn_number}")
-            button.setText(station_name.replace("_", "/"))  # 设置按钮文本
+            button.setText(station_name[2])
             button.setFont(QFont("等线", 12))
-            button.setMinimumSize(60, 30)  # 设置按钮最小尺寸
+            button.setMinimumSize(60, 30)
             button.setStyleSheet("""
             QPushButton {
                 border: 2px solid gray; 
@@ -87,7 +88,7 @@ class route_dialog(QtWidgets.QDialog):
                 border: 2px solid #33373E; 
             }
             """)
-            self.p_layout.addWidget(button)  # 将按钮添加到布局中
+            self.p_layout.addWidget(button)
             
             button.clicked.connect(lambda checked, btn=btn_number: self.afterButtonClick(btn))
             self.buttons[btn_number] = button
@@ -117,7 +118,7 @@ class route_dialog(QtWidgets.QDialog):
                     Producer.ruleText.darkerColor(Producer.ruleText.colorRoute(servel_route)),
                     Producer.ruleText.darkerColor(Producer.ruleText.colorRoute(servel_route))))
         route.setAlignment(Qt.AlignCenter)
-        self.routeLayout.addWidget(route) # 添加到布局中         
+        self.routeLayout.addWidget(route)        
                  
             
     def afterButtonClick(self, button_number):
@@ -166,7 +167,9 @@ class route_dialog(QtWidgets.QDialog):
                         for element in value[:-1]:
                             
                             if element[0] == route:
-                                station_dict[element[1]] = f"{station[-1]} | {Producer.ruleText.betterEnglish(name)}"
+                                for st in Station_Search.station_name:
+                                    if station[-1] == st[0]:
+                                        station_dict[element[1]] = st
         
         station_dict = dict(sorted(station_dict.items()))
         

@@ -1,474 +1,505 @@
-ALL_LINE_LIST = ["1","2","4","6","S5","XP","XPZ","XR","XG","HL1","HL2","HL5","HL8","HL16","HL17","HL20","HL20SW","HLS3"]
-ALL_LINE_DICT = {
-                "1号线（凤岗线）":"1",
-                "2号线（东西线）":"2",
-                "4号线（富乐线）":"4",
-                "6号线（嘉文线）":"6",
-                "S5号线（进武线）":"S5",
-                "新平城际（支线）":"XPZ",
-                "新平城际（主线）":"XP",
-                "郗县捷运绿线":"XG",
-                "郗县捷运红线":"XR",
-                "互利1号线":"HL1",
-                "互利2号线":"HL2",
-                "互利5号线":"HL5",
-                "互利8号线":"HL8",
-                "互利16号线":"HL16",
-                "互利17号线":"HL17",
-                "互利20号线":"HL20",
-                "互利20号线（商务特急）":"HL20SW",
-                "互利S3号线":"HLS3"
-                }
 
-ABOVE_ZERO_DIRECTION = {
-                "1": "开往 凤岗里 方向",
-                "2": "开往 市医学院 方向",
-                "4": "开往 安平财大 方向",
-                "6": "开往 流芳 方向",
-                "S5": "开往 九龙湖街 方向",
-                "XP": "开往 黄龙国际机场 方向",
-                "XPZ": "开往 黄龙国际机场 方向",
-                "XR": "内环 方向",
-                "XG": "开往 荷花池头 方向",
-                "HL1": "开往 互利新港 方向",
-                "HL2": "开往 祖庙 方向",
-                "HL5": "开往 东方路 方向",
-                "HL8": "开往 海底神殿 方向",
-                "HL16": "开往 黄龙国际机场 方向",
-                "HL17": "开往 悬树 方向",
-                "HL20": "开往 互利南站 方向",
-                "HL20SW": "开往 互利南站 方向",
-                "HLS3": "开往 互利东站 方向"
-                }
-
-BELOW_ZERO_DIRECTION = {
-                "1": "开往 体育中心 方向",
-                "2": "开往 明华路 方向",
-                "4": "开往 郗县/下港 方向",
-                "6": "开往 九重天 方向",
-                "S5": "开往 五岔路口 方向",
-                "XP": "开往 新权南山 方向",
-                "XPZ": "开往 方舟广场 方向",
-                "XR": "外环 方向",
-                "XG": "开往 漫水桥村 方向",
-                "HL1": "开往 互利东站 方向",
-                "HL2": "开往 星湖 方向",
-                "HL5": "开往 滨海家园 方向",
-                "HL8": "开往 弗卢伊特村 方向",
-                "HL16": "开往 互利北站 方向",
-                "HL17": "开往 芫荽 方向",
-                "HL20": "开往 黄兴 方向",
-                "HL20SW": "开往 五岔路口 方向",
-                "HLS3": "开往 滨海家园 方向"
-                }
-
-TIME_DICT = {"1":"首班车  6:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",      
-            "2":"首班车  6:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
-            "4":"首班车  6:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
-            "6":"首班车  6:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
-            "S5":"首班车  6:00\n末班车  00:00\n（约5分钟/班）",
-            "XP":"首班车  7:00\n末班车  23:00\n（约5分钟/班）",
-            "XPZ":"首班车  6:00\n末班车  23:00\n（约5分钟/班）",
-            "XR":"首班车  6:00\n末班车  23:00\n（约2分钟/班）",
-            "XG":"首班车  6:00\n末班车  23:00\n（约2分钟/班）",
-            "HL1":"首班车  6:00\n末班车  23:00\n（约3分钟/班）",
-            "HL2":"首班车  6:00\n末班车  23:00\n（约2分钟/班）",
-            "HL5":"首班车  6:00\n末班车  23:00\n（约3分钟/班）",
-            "HL8":"首班车  6:00\n末班车  23:00\n（约3分钟/班）",
-            "HL16":"首班车  6:00\n末班车  00:00\n（约5分钟/班）",
-            "HL17":"首班车  6:00\n末班车  23:00\n（约5分钟/班）",
-            "HL20":"首班车  6:00\n末班车  23:00\n（约5分钟/班）",
-            "HL20SW":"首班车  7:00\n末班车  22:00\n（约5分钟/班）",
-            "HLS3":"首班车  6:00\n末班车  23:00\n（约3分钟/班）"
-         }
-
-RGB_DICT = {"1":"rgb(201,49,43)",
-            "2":"rgb(220,159,70)",
-            "4":"rgb(102,184,156)",
-            "6":"rgb(127,0,255)",
-            "S5":"rgb(25,86,94)",
-            "XP":"rgb(255,85,153)",
-            "XPZ":"rgb(255,85,153)",
-            "XR":"rgb(160,37,42)",
-            "XG":"rgb(0,117,75)",
-            "HL1":"rgb(208,23,34)",
-            "HL2":"rgb(0,0,139)",
-            "HL5":"rgb(221,0,102)",
-            "HL8":"rgb(41,109,35)",
-            "HL16":"rgb(107,184,177)",
-            "HL17":"rgb(255,0,204)",
-            "HL20":"rgb(188,111,55)",
-            "HL20SW":"rgb(108,52,97)",
-            "HLS3":"rgb(107,142,35)"
-            }
-
-BRANCH_LINE_LIST = [
-    ["XP","XPZ"],
-    ["False","HL20SW"]
-    ]
-
-class LineXP:
-    """新平城际"""
-    HLIntlAirportXP = ["XP",1]
-    JiulonghuStreetXP = ["XP",2]
-    SangzhiXP = ["XP",3]
-    SinkholeVillageXP = ["XP",4]
-    FredsBeachXP = ["XP",5]
-    ShuangliNewTownEastXP = ["XP",6]
-    BinhaiWestAveneXP = ["XP",7]
-    AsahinoXP = ["XP",8]
-    CenmenteryXP = ["XP",9]
-    SRGEXPOXP = ["XP",10]
-    XixianSouthXP = ["XP",11]
-    XixianXP = ["XP",12]
-    XixianWestXP = ["XP",13]
-    GongjiataiXP = ["XP",14]
-    BamaojingXP = ["XP",15]
-    ShanmaojuIslandXP = ["XP",16]
-    XinquanNanshanXP = ["XP",17]
-    
-class LineXPZ:
-    """新平城际支线"""
-    HLIntlAirportXPZ = ["XPZ",1]
-    JiulonghuStreetXPZ = ["XPZ",2]
-    SangzhiXPZ = ["XPZ",3]
-    SinkholeVillageXPZ = ["XPZ",4]
-    FredsBeachXPZ = ["XPZ",5]
-    ShuangliNewTownEastXPZ = ["XPZ",6]
-    BinhaiWestAveneXPZ = ["XPZ",7]
-    HujiHingeXPZ = ["XPZ",8]
-    JinjialinXPZ = ["XPZ",9]
-    ArkSquareXPZ = ["XPZ",10]
-    
-class Line1:
-    """1号线"""
-    Fenggangli1 = ["1",1]
-    KaiShekMemorial1 = ["1",2]
-    RikakoRoad1 = ["1",3]
-    WenlanRoad1 = ["1",4]
-    Asahino1 = ["1",5]
-    HujiHinge1 = ["1",6]
-    TechnologyBuilding1 = ["1",7]
-    Jinjialin1 = ["1",8]
-    ArkSquare1 = ["1",9]
-    SportsCenter1 = ["1",10]
-
-class Line2:
-    """2号线"""
-    MinghuaRoad2 = ["2",16]
-    XiyaSouth2 = ["2",15]
-    YunlanRoad2 = ["2",14]
-    TechInnovationPark2 = ["2",13]
-    HuaxingPort2 = ["2",12]
-    APFU2 = ["2",11]
-    JunpengRoad2 = ["2",10]
-    TangpuRoad2 = ["2",9]
-    ArkSquare2 = ["2",8]
-    Mingguang2 = ["2",7]
-    AnpingLibrary2 = ["2",6]
-    PingxiBambooForest2 = ["2",5]
-    CheckerboardGeopark2 = ["2",4]
-    WuchaFlyover2 = ["2",3]
-    FuanRoad2 = ["2",2]
-    MedicalCollege2 = ["2",1]
-    
-class Line4:
-    """4号线"""
-    APFU4 = ["4",1]
-    JiefangSquare4 = ["4",2]
-    FisheryCollege4 = ["4",3]
-    AnpingAcientCity4 = ["4",4]
-    Jinjialin4 = ["4",5]
-    AirportRunwaySite4 = ["4",6]
-    Fulok4 = ["4",7]
-    CoachTerminal4 = ["4",8]
-    Yuewanglou4 = ["4",9]
-    RikakoRoad4 = ["4",10]
-    SRGEXPO4 = ["4",11]
-    TaichiIsland4 = ["4",12]
-    ZhouyuEastRoad4 = ["4",13]
-    Xiagang4 = ["4",14]
-    
-class Line6:
-    """6号线"""
-    Liufang6 = ["6",1]
-    CBCZ6 = ["6",2]
-    PakShekKok6 = ["6",3]
-    AnpingSciencePark6 = ["6",4]
-    FoutrhKangdingRoad6 = ["6",5]
-    Gongxingdao6 = ["6",6]
-    CangshanRoad6 = ["6",7]
-    ErhaiRoad6 = ["6",8]
-    MarbleArch6 = ["6",9]
-    SportsCenter6 = ["6",10]
-    TangpuRoad6 = ["6",11]
-    FisheryCollege6 = ["6",12]
-    HaitangPark6 = ["6",13]
-    Jiuchongtian6 = ["6",14]
-    
-class LineS5:
-    """S5号线"""
-    JiulonghuStreetS5 = ["S5",1]
-    YansuiS5 = ["S5",2]
-    HuangxingS5 = ["S5",3]
-    JizhouS5 = ["S5",4]
-    BaishaLakeS5 = ["S5",5]
-    XiyaNorthS5 = ["S5",6]
-    APFUS5 = ["S5",7]
-    MingguangS5 = ["S5",8]
-    WuchaFlyoverS5 = ["S5",9]
-    
-class APMXR:
-    """郗县捷运红线（环线）"""
-    ZhouyuEastRoadXR = ["XR",6,24]
-    XixianAdminCenterXR = ["XR",7,23]
-    CrowdedForestXR = ["XR",8,22]
-    LakeviewMansionXR = ["XR",9,21]
-    SnowhillTouristCenterXR = ["XR",10,20]
-    MingquanWestRoadXR = ["XR",11,19]
-    LiangkeshuXR = ["XR",12,18]
-    DeshengGateParkXR = ["XR",1,17]
-    TongyiPortXR = ["XR",2,16]
-    BaihuatanXR = ["XR",3,15]
-    XixianSouthXR = ["XR",4,14]
-    FiveKilometersXR = ["XR",5,13]
-    
-class APMXG:
-    """郗县捷运绿线"""
-    LotusPondXG = ["XG",1]
-    XixianWestXG = ["XG",2]
-    BerlinXG = ["XG",3]
-    CrowdedForestXG = ["XG",4]
-    XixianAdminCenterXG = ["XG",5]
-    ZhouyuEastRoadXG = ["XG",6]
-    FiveKilometersXG = ["XG",7]
-    XixianSouthXG = ["XG",8]
-    ManshuiqiaoVillageXG = ["XG",9]
-    
-class LineHL1:
-    """互利1号线"""
-    HarmonyNewPortHL1 = ["HL1",1]
-    HaizhiyunHL1 = ["HL1",2]
-    SubCenterHL1 = ["HL1",3]
-    HLNHL1 = ["HL1",4]
-    XinghuHL1 = ["HL1",5]
-    HarmonySquareHL1 = ["HL1",6]
-    QihaiVillageHL1 = ["HL1",7]
-    HongweiLanshanHL1 = ["HL1",8]
-    FuanSouthHL1 = ["HL1",9]
-    HLEHL1 = ["HL1",10]
-    
-class LineHL2:
-    """互利2号线"""
-    ZumiaoTempleHL2 = ["HL2",1]
-    CostaHL2 = ["HL2",2]
-    HuaxiangshanHL2 = ["HL2",3]
-    XinghuHL2 = ["HL2",4]
-    
-class LineHL5:
-    """互利5号线"""
-    DongfangRoadHL5 = ["HL5",1]
-    HongmeiRoadHL5 = ["HL5",2]
-    BinhaiJiayuanHL5 = ["HL5",3]
-    
-class LineHL8:
-    """互利8号线"""
-    UnderwaterTempleHL8 = ["HL8",1]
-    XiaoximenHL8 = ["HL8",2]
-    ExpoCenterHL8 = ["HL8",3]
-    XinghuHL8 = ["HL8",4]
-    HongqiEastRoadHL8 = ["HL8",5]
-    LihuaRoadHL8 = ["HL8",6]
-    FuluMiddleSchoolHL8 = ["HL8",7]
-    FuluYiteVillageHL8 = ["HL8",8]
-    
-class LineHL16:
-    """互利16号线"""
-    HLIntlAirportHL16 = ["HL16",1]
-    JinwuNorthHL16 = ["HL16",2]
-    HonggudiHL16 = ["HL16",3]
-    AgricultureAcademyHL16 = ["HL16",4]
-    DongfangRoadHL16 = ["HL16",5]
-    GaotianyuanHL16 = ["HL16",6]
-    GubeiHL16 = ["HL16",7]
-    CostaHL16 = ["HL16",8]
-    HaixinHL16 = ["HL16",9]
-    HLNHL16 = ["HL16",10]
-    
-class LineHL17:
-    """互利17号线"""
-    XuanshuHL17 = ["HL17",1]
-    SangyuanNorthHL17 = ["HL17",2]
-    WanyanRiverHL17 = ["HL17",3]
-    RailwayResearchCenterHL17 = ["HL17",4]
-    SYIntlAiportHL17 = ["HL17",5]
-    XinglinWestHL17 = ["HL17",6]
-    ChangqingRoadHL17 = ["HL17",7]
-    KaishanHL17 = ["HL17",8]
-    CinnamonRoadHL17 = ["HL17",9]
-    HLIntlAirportHL17 = ["HL17",10]
-    YongningHL17 = ["HL17",11]
-    YansuiHL17 = ["HL17",12]
-    
-class LineHL20:
-    """互利20号线 普通车"""
-    HLSHL20 = ["HL20",1]
-    HarmonySouthSideHL20 = ["HL20",2]
-    QinglingHL20 = ["HL20",3]
-    LauraCreeksideHL20 = ["HL20",4]
-    LinglengEstuaryHL20 = ["HL20",5]
-    DaokaibiHL20 = ["HL20",6]
-    TunyuShoreHL20 = ["HL20",7]
-    HuangxingHL20 = ["HL20",8]
-    
-class LineHL20S:
-    """互利20号线 商务座"""
-    HLSHL20S = ["HL20SW",1]
-    HuangxingHL20S = ["HL20SW",2]
-    JizhouHL20S = ["HL20SW",3]
-    BaishaLakeHL20S = ["HL20SW",4]
-    XiyaNorthHL20S = ["HL20SW",5]
-    APFUHL20S = ["HL20SW",6]
-    MingguangHL20S = ["HL20SW",7]
-    WuchaFlyoverHL20S = ["HL20SW",8]
-    
-class LineHLS3:
-    """互利S3号线"""
-    HLEHLS3 = ["HLS3",1]
-    FuanHLS3 = ["HLS3",2]
-    FuanMountainHLS3 = ["HLS3",3]
-    FuluYiteVillageHLS3 = ["HLS3",4]
-    QihaiVillageHLS3 = ["HLS3",5]
-    UnderwaterTempleHLS3 = ["HLS3",6]
-    JinshanHLS3 = ["HLS3",7]
-    BinhaiJiayuanHLS3 = ["HLS3",8]
-    
+NAME = "港铁资源包"
+UUID = "8f0dea66-0776-4992-9f71-7408aad8bb2f"
+ALL_LINE_LIST = ['TWL', 'ISL', 'KTL', 'TML', 'TKL', 'TKZ', 'ERL', 'ERZ', 'DCL', 'SIL', 'DRL', 'AEL']
+ALL_LINE_DICT = {'荃湾线': 'TWL', '港岛线': 'ISL', '观塘线': 'KTL', '屯马线': 'TML', '将军澳线（主线）': 'TKL', '将军澳线（支线）': 'TKZ', '东铁线（主线）': 'ERL', '东铁线（支线）': 'ERZ', '东涌线': 'DCL', '南港岛线': 'SIL', '迪士尼线': 'DRL', '机场快线': 'AEL'}
+ABOVE_ZERO_DIRECTION = {'TWL': '开往 荃湾 方向', 'ISL': '开往 坚尼地城 方向', 'KTL': '开往 调景岭 方向', 'TML': '开往 屯门 方向', 'TKL': '开往 北角 方向', 'TKZ': '开往 北角 方向', 'ERL': '开往 金钟 方向', 'ERZ': '开往 金钟 方向', 'DCL': '开往 东涌 方向', 'SIL': '开往 海怡半岛 方向', 'DRL': '开往 欣澳 方向', 'AEL': '开往 博览馆 方向'}
+BELOW_ZERO_DIRECTION = {'TWL': '开往 中环 方向', 'ISL': '开往 柴湾 方向', 'KTL': '开往 黄埔 方向', 'TML': '开往 乌溪沙 方向', 'TKL': '开往 宝琳 方向', 'TKZ': '开往 康城 方向', 'ERL': '开往 罗湖 方向', 'ERZ': '开往 落马洲 方向', 'DCL': '开往 香港 方向', 'SIL': '开往 金钟 方向', 'DRL': '开往 迪士尼 方向', 'AEL': '开往 香港 方向'}
+TIME_DICT = {'TWL': '首班车  06:00\n末班车  01:22', 'ISL': '首班车  05:55\n末班车  00:35', 'KTL': '首班车  06:07\n末班车  01:08', 'TML': '首班车  05:38\n末班车  01:22', 'TKL': '首班车  05:57\n末班车  01:26', 'TKZ': '首班车  05:57\n末班车  01:26', 'ERL': '首班车  05:28\n末班车  01:09', 'ERZ': '首班车  05:28\n末班车  01:09', 'DCL': '首班车  05:59\n末班车  01:09', 'SIL': '首班车  06:00\n末班车  01:14', 'DRL': '首班车  06:15\n末班车  00:45', 'AEL': '首班车  05:50\n末班车  01:13'}
+RGB_DICT = {'TWL': 'rgb(226,35,26)', 'ISL': 'rgb(0,113,206)', 'KTL': 'rgb(0,175,65)', 'TML': 'rgb(154,56,32)', 'TKL': 'rgb(163,94,181)', 'TKZ': 'rgb(163,94,181)', 'ERL': 'rgb(97,180,228)', 'ERZ': 'rgb(97,180,228)', 'DCL': 'rgb(243,139,0)', 'SIL': 'rgb(182,189,0)', 'DRL': 'rgb(231,119,203)', 'AEL': 'rgb(0,112,120)'}
+BRANCH_LINE_LIST = [['TKL', 'TKZ'], ['ERL', 'ERZ']]
+            
+class Line_TWL:
+                
+    TsuenWan = ['TWL', 1]
+                    
+    TaiWoHau = ['TWL', 2]
+                    
+    KwaiHing = ['TWL', 3]
+                    
+    KwaiFong = ['TWL', 4]
+                    
+    LaiKing = ['TWL', 5]
+                    
+    MeiFoo = ['TWL', 6]
+                    
+    LaiChiKok = ['TWL', 7]
+                    
+    CheungShaWan = ['TWL', 8]
+                    
+    ShamShuiPo = ['TWL', 9]
+                    
+    PrinceEdward = ['TWL', 10]
+                    
+    MongKok = ['TWL', 11]
+                    
+    YauMaTei = ['TWL', 12]
+                    
+    Jordan = ['TWL', 13]
+                    
+    TsimShaTsui_EastTsimShaTsui = ['TWL', 14]
+                    
+    Admiralty = ['TWL', 15]
+                    
+    Central_HongKong = ['TWL', 16]
+                    
+class Line_ISL:
+                
+    KennedyTown = ['ISL', 1]
+                    
+    HKU = ['ISL', 2]
+                    
+    SaiYingPun = ['ISL', 3]
+                    
+    SheungWan = ['ISL', 4]
+                    
+    Central_HongKong = ['ISL', 5]
+                    
+    Admiralty = ['ISL', 6]
+                    
+    WanChai = ['ISL', 7]
+                    
+    CausewayBay = ['ISL', 8]
+                    
+    TinHau = ['ISL', 9]
+                    
+    FortressHill = ['ISL', 10]
+                    
+    NorthPoint = ['ISL', 11]
+                    
+    QuarryBay = ['ISL', 12]
+                    
+    TaiKoo = ['ISL', 13]
+                    
+    SaiWanHo = ['ISL', 14]
+                    
+    ShauKeiWan = ['ISL', 15]
+                    
+    HengFaChuen = ['ISL', 16]
+                    
+    ChaiWan = ['ISL', 17]
+                    
+class Line_KTL:
+                
+    TiuKengLeng = ['KTL', 1]
+                    
+    YauTong = ['KTL', 2]
+                    
+    LamTin = ['KTL', 3]
+                    
+    KwunTong = ['KTL', 4]
+                    
+    NgauTauKok = ['KTL', 5]
+                    
+    KowloonBay = ['KTL', 6]
+                    
+    ChoiHung = ['KTL', 7]
+                    
+    DiamondHill = ['KTL', 8]
+                    
+    WongTaiSin = ['KTL', 9]
+                    
+    LokFu = ['KTL', 10]
+                    
+    KowloonTong = ['KTL', 11]
+                    
+    ShekKipMei = ['KTL', 12]
+                    
+    PrinceEdward = ['KTL', 13]
+                    
+    MongKok = ['KTL', 14]
+                    
+    YauMaTei = ['KTL', 15]
+                    
+    HoManTin = ['KTL', 16]
+                    
+    Whampoa = ['KTL', 17]
+                    
+class Line_TML:
+                
+    TuenMun = ['TML', 1]
+                    
+    SiuHong = ['TML', 2]
+                    
+    TinShuiWai = ['TML', 3]
+                    
+    LongPing = ['TML', 4]
+                    
+    YuenLong = ['TML', 5]
+                    
+    KamSheungRoad = ['TML', 6]
+                    
+    TsuenWanWest = ['TML', 7]
+                    
+    MeiFoo = ['TML', 8]
+                    
+    NamCheong = ['TML', 9]
+                    
+    Austin = ['TML', 10]
+                    
+    TsimShaTsui_EastTsimShaTsui = ['TML', 11]
+                    
+    HungHom = ['TML', 12]
+                    
+    HoManTin = ['TML', 13]
+                    
+    ToKwaWan = ['TML', 14]
+                    
+    SungWongToi = ['TML', 15]
+                    
+    KaiTak = ['TML', 16]
+                    
+    DiamondHill = ['TML', 17]
+                    
+    HinKeng = ['TML', 18]
+                    
+    TaiWai = ['TML', 19]
+                    
+    CheKungTemple = ['TML', 20]
+                    
+    ShaTinWai = ['TML', 21]
+                    
+    CityOne = ['TML', 22]
+                    
+    ShekMun = ['TML', 23]
+                    
+    TaiShuiHang = ['TML', 24]
+                    
+    HengOn = ['TML', 25]
+                    
+    MaOnShan = ['TML', 26]
+                    
+    WuKaiSha = ['TML', 27]
+                    
+class Line_TKL:
+                
+    NorthPoint = ['TKL', 1]
+                    
+    QuarryBay = ['TKL', 2]
+                    
+    YauTong = ['TKL', 3]
+                    
+    TiuKengLeng = ['TKL', 4]
+                    
+    TseungKwanO = ['TKL', 5]
+                    
+    HangHau = ['TKL', 6]
+                    
+    PoLam = ['TKL', 7]
+                    
+class Line_TKZ:
+                
+    NorthPoint = ['TKZ', 1]
+                    
+    QuarryBay = ['TKZ', 2]
+                    
+    YauTong = ['TKZ', 3]
+                    
+    TiuKengLeng = ['TKZ', 4]
+                    
+    TseungKwanO = ['TKZ', 5]
+                    
+    LOHAS1o1Park = ['TKZ', 6]
+                    
+class Line_ERL:
+                
+    Admiralty = ['ERL', 1]
+                    
+    ExhibitionCentre = ['ERL', 2]
+                    
+    HungHom = ['ERL', 3]
+                    
+    MongKokEast = ['ERL', 4]
+                    
+    KowloonTong = ['ERL', 5]
+                    
+    TaiWai = ['ERL', 6]
+                    
+    ShaTin = ['ERL', 7]
+                    
+    FoTan = ['ERL', 8]
+                    
+    University = ['ERL', 9]
+                    
+    TaiPoMarket = ['ERL', 10]
+                    
+    TaiWo = ['ERL', 11]
+                    
+    Fanling = ['ERL', 12]
+                    
+    SheungShui = ['ERL', 13]
+                    
+    LoWu = ['ERL', 14]
+                    
+class Line_ERZ:
+                
+    Admiralty = ['ERZ', 1]
+                    
+    ExhibitionCentre = ['ERZ', 2]
+                    
+    HungHom = ['ERZ', 3]
+                    
+    MongKokEast = ['ERZ', 4]
+                    
+    KowloonTong = ['ERZ', 5]
+                    
+    TaiWai = ['ERZ', 6]
+                    
+    ShaTin = ['ERZ', 7]
+                    
+    FoTan = ['ERZ', 8]
+                    
+    University = ['ERZ', 9]
+                    
+    TaiPoMarket = ['ERZ', 10]
+                    
+    TaiWo = ['ERZ', 11]
+                    
+    Fanling = ['ERZ', 12]
+                    
+    SheungShui = ['ERZ', 13]
+                    
+    LokMaChau = ['ERZ', 14]
+                    
+class Line_DCL:
+                
+    TungChung = ['DCL', 1]
+                    
+    SunnyBay = ['DCL', 2]
+                    
+    TsingYi = ['DCL', 3]
+                    
+    LaiKing = ['DCL', 4]
+                    
+    NamCheong = ['DCL', 5]
+                    
+    Olympic = ['DCL', 6]
+                    
+    Kowloon = ['DCL', 7]
+                    
+    Central_HongKong = ['DCL', 8]
+                    
+class Line_SIL:
+                
+    SouthHorizons = ['SIL', 1]
+                    
+    LeiTung = ['SIL', 2]
+                    
+    WongChukHang = ['SIL', 3]
+                    
+    OceanPark = ['SIL', 4]
+                    
+    Admiralty = ['SIL', 5]
+                    
+class Line_DRL:
+                
+    SunnyBay = ['DRL', 1]
+                    
+    DisneylandResort = ['DRL', 2]
+                    
+class Line_AEL:
+                
+    AsiaWorldExpo = ['AEL', 1]
+                    
+    Airport = ['AEL', 2]
+                    
+    TsingYi = ['AEL', 3]
+                    
+    Kowloon = ['AEL', 4]
+                    
+    Central_HongKong = ['AEL', 5]
+                    
 class Station:
-    """站点"""
-    MinghuaRoad = [Line2.MinghuaRoad2,"明华路"]
-    XiyaSouth = [Line2.XiyaSouth2,"犀崖南"]
-    YunlanRoad = [Line2.YunlanRoad2,"云岚路"]
-    TechInnovationPark = [Line2.TechInnovationPark2,"科创园"]
-    HuaxingPort = [Line2.HuaxingPort2,"华兴湾"]
-    APFU = [Line2.APFU2,Line4.APFU4,LineS5.APFUS5,LineHL20S.APFUHL20S,"安平财大"]
-    JunpengRoad = [Line2.JunpengRoad2,"俊鹏路"]
-    TangpuRoad = [Line2.TangpuRoad2,Line6.TangpuRoad6,"塘埔路"]
-    ArkSquare = [Line1.ArkSquare1,Line2.ArkSquare2,LineXPZ.ArkSquareXPZ,"方舟广场"]
-    Dongsheng = [Line2.Mingguang2,LineS5.MingguangS5,LineHL20S.MingguangHL20S,"明光"]
-    AnpingLibrary = [Line2.AnpingLibrary2,"市图书馆"]
-    PingxiBambooForest = [Line2.PingxiBambooForest2,"平溪竹海"]
-    CheckerboardGeopark = [Line2.CheckerboardGeopark2,"格仔公园"]
-    WuchaFlyover = [Line2.WuchaFlyover2,LineS5.WuchaFlyoverS5,LineHL20S.WuchaFlyoverHL20S,"五岔路口"]
-    FuanRoad = [Line2.FuanRoad2,"福安路"]
-    MedicalCollege = [Line2.MedicalCollege2,"市医学院"]
-    JiulonghuStreet = [LineXP.JiulonghuStreetXP,LineXPZ.JiulonghuStreetXPZ,LineS5.JiulonghuStreetS5,"九龙湖街"]
-    Yansui = [LineS5.YansuiS5,LineHL17.YansuiHL17,"芫荽"]
-    Huangxing = [LineS5.HuangxingS5,LineHL20.HuangxingHL20,LineHL20S.HuangxingHL20S,"黄兴"]
-    Jizhou = [LineS5.JizhouS5,LineHL20S.JizhouHL20S,"济舟"]
-    BaishaLake = [LineS5.BaishaLakeS5,LineHL20S.BaishaLakeHL20S,"白沙湖"]
-    XiyaNorth = [LineS5.XiyaNorthS5,LineHL20S.XiyaNorthHL20S,"犀崖北"]
-    HLS = [LineHL20.HLSHL20,LineHL20S.HLSHL20S,"互利南站"]
-    HarmonySouthSide = [LineHL20.HarmonySouthSideHL20,"凛冰南界"]
-    Qingling = [LineHL20.QinglingHL20,"清灵"]
-    LauraCreekside = [LineHL20.LauraCreeksideHL20,"劳拉溪畔"]
-    LinglengEstuary = [LineHL20.LinglengEstuaryHL20,"泠棱江口"]
-    Daokaibi = [LineHL20.DaokaibiHL20,"道开壁"]
-    TunyuShore = [LineHL20.TunyuShoreHL20,"豚雨石岸"]
-    Xuanshu = [LineHL17.XuanshuHL17,"悬树"]
-    SangyuanNorth = [LineHL17.SangyuanNorthHL17,"桑园北"]
-    WanyanRiver = [LineHL17.WanyanRiverHL17,"蜿蜒河"]
-    RailwayResearchCenter = [LineHL17.RailwayResearchCenterHL17,"铁研中心"]
-    SYIntlAiport = [LineHL17.SYIntlAiportHL17,"桑园国际机场"]
-    XinglinWest = [LineHL17.XinglinWestHL17,"杏林西"]
-    ChangqingRoad = [LineHL17.ChangqingRoadHL17,"常青路"]
-    Kaishan = [LineHL17.KaishanHL17,"开山"]
-    CinnamonRoad = [LineHL17.CinnamonRoadHL17,"桂香路"]
-    HLIntlAirport = [LineXP.HLIntlAirportXP,LineXPZ.HLIntlAirportXPZ,LineHL16.HLIntlAirportHL16,LineHL17.HLIntlAirportHL17,"黄龙国际机场"]
-    Yongning = [LineHL17.YongningHL17,"永宁"]
-    Sangzhi = [LineXP.SangzhiXP,LineXPZ.SangzhiXPZ,"桑植"]
-    SinkholeVillage = [LineXP.SinkholeVillageXP,LineXPZ.SinkholeVillageXPZ,"天坑村"]
-    FredsBeach = [LineXP.FredsBeachXP,LineXPZ.FredsBeachXPZ,"弗雷德沙滩"]
-    ShuangliNewTownEast = [LineXP.ShuangliNewTownEastXP,LineXPZ.ShuangliNewTownEastXPZ,"双鲤新城东"]
-    BinhaiWestAvene = [LineXP.BinhaiWestAveneXP,LineXPZ.BinhaiWestAveneXPZ,"滨海西大道"]
-    HujiHinge = [LineXPZ.HujiHingeXPZ,Line1.HujiHinge1,"湖际枢纽"]
-    Jinjialin = [LineXPZ.JinjialinXPZ,Line1.Jinjialin1,Line4.Jinjialin4,"金家林"]
-    Asahino_Fulok = [LineXP.AsahinoXP,Line1.Asahino1,Line4.Fulok4,"金花/富乐"]
-    Cenmentery = [LineXP.CenmenteryXP,"烈士陵园"]
-    SRGEXPO = [LineXP.SRGEXPOXP,Line4.SRGEXPO4,"银江大会展中心"]
-    XixianSouth = [LineXP.XixianSouthXP,APMXR.XixianSouthXR,APMXG.XixianSouthXG,"郗县南站"]
-    Xixian_Xiagang = [LineXP.XixianXP,Line4.Xiagang4,"郗县站/下港"]
-    XixianWest = [LineXP.XixianWestXP,APMXG.XixianWestXG,"郗县西站"]
-    Gongjiatai = [LineXP.GongjiataiXP,"贡家台"]
-    Bamaojing = [LineXP.BamaojingXP,"八毛井"]
-    ShanmaojuIsland = [LineXP.ShanmaojuIslandXP,"山毛榉岛"]
-    XinquanNanshan = [LineXP.XinquanNanshanXP,"新权南山"]
-    Fenggangli = [Line1.Fenggangli1,"凤岗里"]
-    KaiShekMemorial = [Line1.KaiShekMemorial1,"蒋公庙"]
-    RikakoRoad = [Line1.RikakoRoad1,Line4.RikakoRoad4,"仙梨路"]
-    WenlanRoad = [Line1.WenlanRoad1,"文澜路"]
-    TechnologyBuilding = [Line1.TechnologyBuilding1,"科技大楼"]
-    SportsCenter = [Line1.SportsCenter1,Line6.SportsCenter6,"体育中心"]
-    JiefangSquare = [Line4.JiefangSquare4,"解放广场"]
-    FisheryCollege = [Line4.FisheryCollege4,Line6.FisheryCollege6,"水产学院"]
-    AnpingAcientCity = [Line4.AnpingAcientCity4,"安平古城"]
-    AirportRunwaySite = [Line4.AirportRunwaySite4,"机场跑道旧址"]
-    CoachTerminal = [Line4.CoachTerminal4,"汽车总站"]
-    Yuewanglou = [Line4.Yuewanglou4,"越王楼"]
-    TaichiIsland = [Line4.TaichiIsland4,"太极岛"]
-    ZhouyuEastRoad = [Line4.ZhouyuEastRoad4,APMXR.ZhouyuEastRoadXR,APMXG.ZhouyuEastRoadXG,"周瑜东路"]
-    XixianAdminCenter = [APMXR.XixianAdminCenterXR,APMXG.XixianAdminCenterXG,"县行政服务中心"]
-    CrowdedForest = [APMXR.CrowdedForestXR,APMXG.CrowdedForestXG,"薮渊之林"]
-    LakeviewMansion = [APMXR.LakeviewMansionXR,"滨湖居"]
-    SnowhillTouristCenter = [APMXR.SnowhillTouristCenterXR,"雪山城市客厅"]
-    MingquanWestRoad = [APMXR.MingquanWestRoadXR,"民权西路"]
-    Liangkeshu = [APMXR.LiangkeshuXR,"两棵树"]
-    DeshengGatePark = [APMXR.DeshengGateParkXR,"德胜门遗址公园"]
-    TongyiPort = [APMXR.TongyiPortXR,"同益码头"]
-    Baihuatan = [APMXR.BaihuatanXR,"百花潭"]
-    FiveKilometers = [APMXR.FiveKilometersXR,APMXG.FiveKilometersXG,"五公里"]
-    LotusPond = [APMXG.LotusPondXG,"荷花池头"]
-    Berlin = [APMXG.BerlinXG,"柏林"]
-    ManshuiqiaoVillage = [APMXG.ManshuiqiaoVillageXG,"漫水桥村"]
-    JinwuNorth = [LineHL16.JinwuNorthHL16,"进武北"]
-    Honggudi = [LineHL16.HonggudiHL16,"红谷地"]
-    AgricultureAcademy = [LineHL16.AgricultureAcademyHL16,"省农科院"]
-    DongfangRoad = [LineHL5.DongfangRoadHL5,LineHL16.DongfangRoadHL16,"东方路"]
-    Gaotianyuan = [LineHL16.GaotianyuanHL16,"高天原"]
-    Gubei = [LineHL16.GubeiHL16,"古北"]
-    Haixin = [LineHL16.HaixinHL16,"塰欣"]
-    HLN = [LineHL1.HLNHL1,LineHL16.HLNHL16,"互利北站"]
-    HarmonyNewPort = [LineHL1.HarmonyNewPortHL1,"互利新港"]
-    Haizhiyun = [LineHL1.HaizhiyunHL1,"海之韵"]
-    SubCenter = [LineHL1.SubCenterHL1,"副中心"]
-    Xinghu = [LineHL1.XinghuHL1,LineHL2.XinghuHL2,LineHL8.XinghuHL8,"星湖"]
-    HarmonySquare = [LineHL1.HarmonySquareHL1,"互利广场"]
-    QihaiVillage = [LineHL1.QihaiVillageHL1,LineHLS3.QihaiVillageHLS3,"七海村"]
-    HongweiLanshan = [LineHL1.HongweiLanshanHL1,"鸿玮澜山"]
-    FuanSouth = [LineHL1.FuanSouthHL1,"阜安南"]
-    HLE = [LineHL1.HLEHL1,LineHLS3.HLEHLS3,"互利东站"]
-    ZumiaoTemple = [LineHL2.ZumiaoTempleHL2,"祖庙"]
-    Costa = [LineHL2.CostaHL2,LineHL16.CostaHL16,"海角"]
-    Huaxiangshan = [LineHL2.HuaxiangshanHL2,"花响山"]
-    HongmeiRoad = [LineHL5.HongmeiRoadHL5,"红梅路"]
-    BinhaiJiayuan = [LineHL5.BinhaiJiayuanHL5,LineHLS3.BinhaiJiayuanHLS3,"滨海家园"]
-    UnderwaterTemple = [LineHL8.UnderwaterTempleHL8,LineHLS3.UnderwaterTempleHLS3,"海底神殿"]
-    Xiaoximen = [LineHL8.XiaoximenHL8,"小西门"]
-    ExpoCenter = [LineHL8.ExpoCenterHL8,"会展中心"]
-    HongqiEastRoad = [LineHL8.HongqiEastRoadHL8,"红旗东路"]
-    LihuaRoad = [LineHL8.LihuaRoadHL8,"丽华路"]
-    FuluMiddleSchool = [LineHL8.FuluMiddleSchoolHL8,"弗卢中学"]
-    FuluYiteVillage = [LineHL8.FuluYiteVillageHL8,LineHLS3.FuluYiteVillageHLS3,"弗卢伊特村"]
-    Fuan = [LineHLS3.FuanHLS3,"阜安"]
-    FuanMountain = [LineHLS3.FuanMountainHLS3,"阜安山"]
-    Jinshan = [LineHLS3.JinshanHLS3,"金山"]
-    Liufang = [Line6.Liufang6,"流芳"]
-    CBCZ = [Line6.CBCZ6,"跨境合作区"]
-    PakShekKok = [Line6.PakShekKok6,"白石角"]
-    AnpingSciencePark = [Line6.AnpingSciencePark6,"安平科学园"]
-    FoutrhKangdingRoad = [Line6.FoutrhKangdingRoad6,"康定四路"]
-    Gongxingdao = [Line6.Gongxingdao6,"公行道"]
-    CangshanRoad = [Line6.CangshanRoad6,"苍山路"]
-    ErhaiRoad = [Line6.ErhaiRoad6,"洱海路"]
-    MarbleArch = [Line6.MarbleArch6,"凯旋门"]
-    HaitangPark = [Line6.HaitangPark6,"海棠公园"]
-    Jiuchongtian = [Line6.Jiuchongtian6,"九重天"]
+            
+    TsuenWan = [Line_TWL.TsuenWan,"荃湾"]
+                
+    TaiWoHau = [Line_TWL.TaiWoHau,"大窝口"]
+                
+    KwaiHing = [Line_TWL.KwaiHing,"葵兴"]
+                
+    KwaiFong = [Line_TWL.KwaiFong,"葵芳"]
+                
+    LaiKing = [Line_TWL.LaiKing,Line_DCL.LaiKing,"荔景"]
+                
+    MeiFoo = [Line_TWL.MeiFoo,Line_TML.MeiFoo,"美孚"]
+                
+    LaiChiKok = [Line_TWL.LaiChiKok,"荔枝角"]
+                
+    CheungShaWan = [Line_TWL.CheungShaWan,"长沙湾"]
+                
+    ShamShuiPo = [Line_TWL.ShamShuiPo,"深水埗"]
+                
+    PrinceEdward = [Line_TWL.PrinceEdward,Line_KTL.PrinceEdward,"太子"]
+                
+    MongKok = [Line_TWL.MongKok,Line_KTL.MongKok,"旺角"]
+                
+    YauMaTei = [Line_TWL.YauMaTei,Line_KTL.YauMaTei,"油麻地"]
+                
+    Jordan = [Line_TWL.Jordan,"佐敦"]
+                
+    TsimShaTsui_EastTsimShaTsui = [Line_TWL.TsimShaTsui_EastTsimShaTsui,Line_TML.TsimShaTsui_EastTsimShaTsui,"尖沙咀/尖东"]
+                
+    Admiralty = [Line_TWL.Admiralty,Line_ISL.Admiralty,Line_ERL.Admiralty,Line_ERZ.Admiralty,Line_SIL.Admiralty,"金钟"]
+                
+    Central_HongKong = [Line_TWL.Central_HongKong,Line_ISL.Central_HongKong,Line_DCL.Central_HongKong,Line_AEL.Central_HongKong,"中环/香港"]
+                
+    KennedyTown = [Line_ISL.KennedyTown,"坚尼地城"]
+                
+    HKU = [Line_ISL.HKU,"香港大学"]
+                
+    SaiYingPun = [Line_ISL.SaiYingPun,"西营盘"]
+                
+    SheungWan = [Line_ISL.SheungWan,"上环"]
+                
+    WanChai = [Line_ISL.WanChai,"湾仔"]
+                
+    CausewayBay = [Line_ISL.CausewayBay,"铜锣湾"]
+                
+    TinHau = [Line_ISL.TinHau,"天后"]
+                
+    FortressHill = [Line_ISL.FortressHill,"炮台山"]
+                
+    NorthPoint = [Line_ISL.NorthPoint,Line_TKL.NorthPoint,Line_TKZ.NorthPoint,"北角"]
+                
+    QuarryBay = [Line_ISL.QuarryBay,Line_TKL.QuarryBay,Line_TKZ.QuarryBay,"鲗鱼涌"]
+                
+    TaiKoo = [Line_ISL.TaiKoo,"太古"]
+                
+    SaiWanHo = [Line_ISL.SaiWanHo,"西湾河"]
+                
+    ShauKeiWan = [Line_ISL.ShauKeiWan,"筲箕湾"]
+                
+    HengFaChuen = [Line_ISL.HengFaChuen,"杏花邨"]
+                
+    ChaiWan = [Line_ISL.ChaiWan,"柴湾"]
+                
+    TiuKengLeng = [Line_KTL.TiuKengLeng,Line_TKL.TiuKengLeng,Line_TKZ.TiuKengLeng,"调景岭"]
+                
+    YauTong = [Line_KTL.YauTong,Line_TKL.YauTong,Line_TKZ.YauTong,"油塘"]
+                
+    LamTin = [Line_KTL.LamTin,"蓝田"]
+                
+    KwunTong = [Line_KTL.KwunTong,"观塘"]
+                
+    NgauTauKok = [Line_KTL.NgauTauKok,"牛头角"]
+                
+    KowloonBay = [Line_KTL.KowloonBay,"九龙湾"]
+                
+    ChoiHung = [Line_KTL.ChoiHung,"彩虹"]
+                
+    DiamondHill = [Line_KTL.DiamondHill,Line_TML.DiamondHill,"钻石山"]
+                
+    WongTaiSin = [Line_KTL.WongTaiSin,"黄大仙"]
+                
+    LokFu = [Line_KTL.LokFu,"乐富"]
+                
+    KowloonTong = [Line_KTL.KowloonTong,Line_ERL.KowloonTong,Line_ERZ.KowloonTong,"九龙塘"]
+                
+    ShekKipMei = [Line_KTL.ShekKipMei,"石硖尾"]
+                
+    HoManTin = [Line_KTL.HoManTin,Line_TML.HoManTin,"何文田"]
+                
+    Whampoa = [Line_KTL.Whampoa,"黄埔"]
+                
+    TuenMun = [Line_TML.TuenMun,"屯门"]
+                
+    SiuHong = [Line_TML.SiuHong,"兆康"]
+                
+    TinShuiWai = [Line_TML.TinShuiWai,"天水围"]
+                
+    LongPing = [Line_TML.LongPing,"朗屏"]
+                
+    YuenLong = [Line_TML.YuenLong,"元朗"]
+                
+    KamSheungRoad = [Line_TML.KamSheungRoad,"锦上路"]
+                
+    TsuenWanWest = [Line_TML.TsuenWanWest,"荃湾西"]
+                
+    NamCheong = [Line_TML.NamCheong,Line_DCL.NamCheong,"南昌"]
+                
+    Austin = [Line_TML.Austin,"柯士甸"]
+                
+    HungHom = [Line_TML.HungHom,Line_ERL.HungHom,Line_ERZ.HungHom,"红磡"]
+                
+    ToKwaWan = [Line_TML.ToKwaWan,"土瓜湾"]
+                
+    SungWongToi = [Line_TML.SungWongToi,"宋皇台"]
+                
+    KaiTak = [Line_TML.KaiTak,"启德"]
+                
+    HinKeng = [Line_TML.HinKeng,"显径"]
+                
+    TaiWai = [Line_TML.TaiWai,Line_ERL.TaiWai,Line_ERZ.TaiWai,"大围"]
+                
+    CheKungTemple = [Line_TML.CheKungTemple,"车公庙"]
+                
+    ShaTinWai = [Line_TML.ShaTinWai,"沙田围"]
+                
+    CityOne = [Line_TML.CityOne,"第一城"]
+                
+    ShekMun = [Line_TML.ShekMun,"石门"]
+                
+    TaiShuiHang = [Line_TML.TaiShuiHang,"大水坑"]
+                
+    HengOn = [Line_TML.HengOn,"恒安"]
+                
+    MaOnShan = [Line_TML.MaOnShan,"马鞍山"]
+                
+    WuKaiSha = [Line_TML.WuKaiSha,"乌溪沙"]
+                
+    TseungKwanO = [Line_TKL.TseungKwanO,Line_TKZ.TseungKwanO,"将军澳"]
+                
+    HangHau = [Line_TKL.HangHau,"坑口"]
+                
+    PoLam = [Line_TKL.PoLam,"宝琳"]
+                
+    LOHAS1o1Park = [Line_TKZ.LOHAS1o1Park,"康城"]
+                
+    ExhibitionCentre = [Line_ERL.ExhibitionCentre,Line_ERZ.ExhibitionCentre,"会展"]
+                
+    MongKokEast = [Line_ERL.MongKokEast,Line_ERZ.MongKokEast,"旺角东"]
+                
+    ShaTin = [Line_ERL.ShaTin,Line_ERZ.ShaTin,"沙田"]
+                
+    FoTan = [Line_ERL.FoTan,Line_ERZ.FoTan,"火炭"]
+                
+    University = [Line_ERL.University,Line_ERZ.University,"大学"]
+                
+    TaiPoMarket = [Line_ERL.TaiPoMarket,Line_ERZ.TaiPoMarket,"大埔墟"]
+                
+    TaiWo = [Line_ERL.TaiWo,Line_ERZ.TaiWo,"太和"]
+                
+    Fanling = [Line_ERL.Fanling,Line_ERZ.Fanling,"粉岭"]
+                
+    SheungShui = [Line_ERL.SheungShui,Line_ERZ.SheungShui,"上水"]
+                
+    LoWu = [Line_ERL.LoWu,"罗湖"]
+                
+    LokMaChau = [Line_ERZ.LokMaChau,"落马洲"]
+                
+    TungChung = [Line_DCL.TungChung,"东涌"]
+                
+    SunnyBay = [Line_DCL.SunnyBay,Line_DRL.SunnyBay,"欣澳"]
+                
+    TsingYi = [Line_DCL.TsingYi,Line_AEL.TsingYi,"青衣"]
+                
+    Olympic = [Line_DCL.Olympic,"奥运"]
+                
+    Kowloon = [Line_DCL.Kowloon,Line_AEL.Kowloon,"九龙"]
+                
+    SouthHorizons = [Line_SIL.SouthHorizons,"海怡半岛"]
+                
+    LeiTung = [Line_SIL.LeiTung,"利东"]
+                
+    WongChukHang = [Line_SIL.WongChukHang,"黄竹坑"]
+                
+    OceanPark = [Line_SIL.OceanPark,"海洋公园"]
+                
+    DisneylandResort = [Line_DRL.DisneylandResort,"迪士尼"]
+                
+    AsiaWorldExpo = [Line_AEL.AsiaWorldExpo,"博览馆"]
+                
+    Airport = [Line_AEL.Airport,"机场"]
+                
+DESCRIPTION = [['TsuenWan', '数码服务站：A出口\n饮水机：车站大堂C出口（非付费区）'], ['TaiWoHau', '数码服务站：B出口'], ['KwaiHing', '数码服务站：A/D出口'], ['KwaiFong', '数码服务站：A/D出口\n饮水机：车站大堂C出口（非付费区）'], ['LaiKing', '洗手间：车站大堂（付费区）\n哺乳室：车站大堂（付费区）\n数码服务站：车站大堂\n'], ['MeiFoo', '洗手间：屯马线车站大堂（付费区）\n数码服务站：A出口\n饮水机：B出口（非付费区）'], ['LaiChiKok', '数码服务站：A出口'], ['CheungShaWan', '数码服务站：C出口'], ['ShamShuiPo', '数码服务站：C出口'], ['PrinceEdward', '洗手间：A出口（付费区）\n数码服务站：车站大堂\n饮水机：A出口（非付费区）'], ['MongKok', '洗手间：A出口（付费区）\n数码服务站：E出口'], ['YauMaTei', '洗手间：C出口（付费区）\n哺乳室：C出口（付费区）\n数码服务站：D出口'], ['Jordan', '数码服务站：C出口'], ['TsimShaTsui_EastTsimShaTsui', '洗手间：尖沙咀站E出口（非付费区） 尖东站车站大堂（付费区）\n哺乳室：尖沙咀站E出口（非付费区）\n数码服务站：尖沙咀站C出口 尖东站车站大堂东侧\n饮水机：尖东站P1出口（非付费区）'], ['Admiralty', '洗手间：车站大堂L1层/L5层/F出口（付费区）\n哺乳室：F出口（付费区）\n数码服务站：D出口\n饮水机：B出口（非付费区）'], ['Central_HongKong', '洗手间：中环站车站大堂L2层A出口（付费区） 香港站车站大堂G层E出口/L1层/L2层（非付费区）\n哺乳室：中环站车站大堂L2层A出口（付费区）\n数码服务站：中环站A出口 香港站东涌线车站大堂L3层（F出口旁）'], ['KennedyTown', '洗手间：A出口（非付费区）\n数码服务站：C出口'], ['HKU', '洗手间：B出口（付费区）\n数码服务站：B出口'], ['SaiYingPun', '洗手间：B出口（付费区）\n数码服务站：A出口'], ['SheungWan', '洗手间：E出口（付费区）\n数码服务站：车站大堂中部'], ['WanChai', '数码服务站：车站大堂'], ['CausewayBay', '数码服务站：A出口'], ['TinHau', '数码服务站：B出口'], ['FortressHill', '数码服务站：B出口'], ['NorthPoint', '洗手间：B出口（付费区）\n哺乳室：B出口（付费区）\n数码服务站：A出口\n饮水机：B出口（非付费区）'], ['QuarryBay', '洗手间：A出口（付费区）\n数码服务站：C出口'], ['TaiKoo', '数码服务站：D出口'], ['SaiWanHo', '数码服务站：A出口'], ['ShauKeiWan', '数码服务站：B出口和C出口附近'], ['HengFaChuen', '数码服务站：A出口'], ['ChaiWan', '数码服务站：车站大堂\n饮水机：D出口（非付费区）'], ['TiuKengLeng', '洗手间：车站大堂（付费区）\n哺乳室：车站大堂（付费区）\n数码服务站：A出口\n饮水机：B出口（非付费区）'], ['YauTong', '洗手间：车站大堂（付费区）\n哺乳室：车站大堂（付费区）\n数码服务站：车站大堂中部'], ['LamTin', '数码服务站：B出口'], ['KwunTong', '数码服务站：B出口'], ['NgauTauKok', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['KowloonBay', '数码服务站：C出口'], ['ChoiHung', '数码服务站：C出口\n饮水机：A1出口（非付费区）'], ['DiamondHill', '洗手间：屯马线车站大堂（付费区）\n哺乳室：屯马线车站大堂（付费区）\n数码服务站：A出口\n饮水机：A2出口（非付费区）'], ['WongTaiSin', '数码服务站：E出口'], ['LokFu', '数码服务站：车站大堂'], ['KowloonTong', '洗手间：东铁线车站大堂北侧（付费区）\n数码服务站：B出口'], ['ShekKipMei', '数码服务站：A出口对面'], ['HoManTin', '洗手间：B出口（付费区）\n数码服务站：A出口\n饮水机：A出口（非付费区）'], ['Whampoa', '洗手间：D出口（付费区）\n数码服务站：B/C出口'], ['TuenMun', '洗手间：F出口（付费区）\n数码服务站：C出口'], ['SiuHong', '洗手间：A出口（付费区）\n数码服务站：E出口'], ['TinShuiWai', '洗手间：C出口（付费区）\n数码服务站：D出口\n饮水机：E3出口（非付费区）'], ['LongPing', '洗手间：车站大堂（付费区）\n数码服务站：B出口'], ['YuenLong', '洗手间：车站大堂（付费区）\n数码服务站：F出口'], ['KamSheungRoad', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['TsuenWanWest', '洗手间：车站大堂（付费区）\n数码服务站：E出口'], ['NamCheong', '洗手间：A出口（付费区）\n数码服务站：A出口\n饮水机：A出口（非付费区）'], ['Austin', '洗手间：C出口（付费区）\n数码服务站：A出口\n饮水机：C出口（非付费区）'], ['HungHom', '洗手间：车站大堂U2层/U3层（非付费区）和屯马线站台\n数码服务站：C出口'], ['ToKwaWan', '洗手间：B出口（付费区）\n哺乳室：B出口（付费区）\n数码服务站：车站大堂中部\n饮水机：A出口（非付费区）'], ['SungWongToi', '洗手间：D出口（付费区）\n哺乳室：D出口（付费区）\n数码服务站：A出口\n饮水机：A出口（非付费区）'], ['KaiTak', '洗手间：C出口（付费区）\n哺乳室：C出口（付费区）\n数码服务站：D出口\n饮水机：A出口（非付费区）'], ['HinKeng', '洗手间：车站大堂（付费区）\n哺乳室：车站大堂（付费区）\n数码服务站：A出口'], ['TaiWai', '洗手间：B出口（付费区）\n数码服务站：A出口\nC出口（非付费区）'], ['CheKungTemple', '洗手间：车站大堂（付费区）\n数码服务站：C出口'], ['ShaTinWai', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['CityOne', '洗手间：车站大堂（付费区）\n数码服务站：C/D出口'], ['ShekMun', '洗手间：车站大堂（付费区）'], ['TaiShuiHang', '洗手间：车站大堂（付费区）\n数码服务站：车站控制室旁\n饮水机：A出口（非付费区）'], ['HengOn', '洗手间：车站大堂（付费区）\n数码服务站：C出口'], ['MaOnShan', '洗手间：车站大堂（付费区）\n数码服务站：B出口'], ['WuKaiSha', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['TseungKwanO', '数码服务站：B2出口'], ['HangHau', '数码服务站：B出口\n饮水机：A出口（非付费区）'], ['PoLam', '数码服务站：B出口'], ['LOHAS1o1Park', '数码服务站：C出口'], ['ExhibitionCentre', '洗手间：B出口（付费区）\n哺乳室：B出口（付费区）\n数码服务站：A出口\n饮水机：A出口（非付费区）'], ['MongKokEast', '洗手间：C出口（付费区）\n数码服务站：D出口'], ['ShaTin', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['FoTan', '洗手间：A出口（付费区）\n数码服务站：A出口'], ['University', '洗手间：B出口（付费区）\n数码服务站：B出口'], ['TaiPoMarket', '洗手间：A出口（付费区）\n数码服务站：B出口\n饮水机：B出口（非付费区）'], ['TaiWo', '洗手间：A出口（付费区）\n数码服务站：A出口'], ['Fanling', '洗手间：车站大堂（付费区）\n数码服务站：车站大堂'], ['SheungShui', '洗手间：车站大堂（付费区）\n数码服务站：B出口'], ['LoWu', '洗手间：站台（付费区）和抵港大堂层（非付费区）\n数码服务站：入境大堂（2楼）和出境大堂（地下）'], ['LokMaChau', '洗手间：抵港大堂层（非付费区）和离港大堂层（付费区）\n数码服务站：到境大堂（2楼）和票务大堂（3楼）'], ['TungChung', '数码服务站：A出口和B出口附近\n饮水机：D出口（非付费区）'], ['SunnyBay', '洗手间：迪士尼线迪士尼方向3号站台'], ['TsingYi', '洗手间：车站大堂U2层和U4层（非付费区）\n数码服务站：车站大堂\n饮水机：C出口（非付费区）'], ['Olympic', '数码服务站：C出口和D出口附近'], ['Kowloon', '洗手间：车站大堂G层B出口和L2层（非付费区）\n数码服务站：车站大堂'], ['SouthHorizons', '洗手间：车站大堂（付费区）\n数码服务站：C出口\n饮水机：B出口（非付费区）'], ['LeiTung', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['WongChukHang', '洗手间：车站大堂（付费区）\n数码服务站：A出口'], ['OceanPark', '洗手间：车站大堂（付费区）\n数码服务站：B出口'], ['DisneylandResort', '洗手间：迪士尼线欣澳方向1号站台'], ['AsiaWorldExpo', '数码服务站：A出口'], ['Airport', '数码服务站：L5层入境站台']]
+            
