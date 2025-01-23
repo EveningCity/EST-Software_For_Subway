@@ -46,21 +46,29 @@ class main(QtWidgets.QDialog):
     def Settings(self):
         
         self.clearAll()
+        global JUDGE
+        JUDGE = True  
         Setting.setting_dialog().show()
         
     def Route(self):
 
         self.clearAll()
+        global JUDGE
+        JUDGE = True  
         Select_Route.select_route().show()
             
     def Plan(self):
 
         self.clearAll()
+        global JUDGE
+        JUDGE = True  
         Plan_Dialog.plan_dialog().show()
         
     def Search(self):
 
         self.clearAll()
+        global JUDGE
+        JUDGE = True  
         Search_Dialog.search_dialog().show()
             
     def Pack(self):
