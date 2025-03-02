@@ -33,6 +33,11 @@ class select_route(QtWidgets.QDialog):
         
         self.addRoute()
         
+        self.setObjectName("Select")
+        for window in QApplication.topLevelWidgets():
+            if window.objectName() != "Main" and window != self:
+                window.deleteLater()
+        
         
     def addRoute(self):
         
@@ -86,16 +91,16 @@ class select_route(QtWidgets.QDialog):
                 
                 num = num + 1
                 
-            else:
+        else:
+        
+            self.p_layout.setAlignment(Qt.AlignCenter)
             
-                self.p_layout.setAlignment(Qt.AlignCenter)
-                
-                p_text = QLabel()
-                p_text.setText("未找到匹配项，请检查输入或尝试其他查询")  
-                p_text.setFont(QFont("黑体", 12))
-                p_text.setAlignment(Qt.AlignCenter) 
-                p_text.setMinimumSize(60, 30)  
-                self.p_layout.addWidget(p_text)
+            p_text = QLabel()
+            p_text.setText("未找到匹配项，请检查输入或尝试其他查询")  
+            p_text.setFont(QFont("黑体", 12))
+            p_text.setAlignment(Qt.AlignCenter) 
+            p_text.setMinimumSize(60, 30)  
+            self.p_layout.addWidget(p_text)
                 
                 
     def afterClick(self, button_number):
@@ -105,9 +110,14 @@ class select_route(QtWidgets.QDialog):
             if route[0] == button_number:
                 global ROUTE
                 ROUTE = route[1]
+                
+        for window in QApplication.topLevelWidgets():
+            if window.objectName() == "Route":
+                window.deleteLater()
+                break
         
-        self.searchedDialog = Route_Dialog.route_dialog()
-        self.searchedDialog.show()
+        self.routeDia = Route_Dialog.route_dialog()
+        self.routeDia.show()
         
         
     def clearLayout(self, layout):
@@ -119,11 +129,3 @@ class select_route(QtWidgets.QDialog):
                 widget.deleteLater()  
             else:
                 self.clearLayout(item.layout())  
-                
-                
-    def closeEvent(self, event):
-        Main.JUDGE = False  
-        for window in QApplication.topLevelWidgets():
-            if window.objectName() != "Main":
-                window.deleteLater()
-        event.accept()

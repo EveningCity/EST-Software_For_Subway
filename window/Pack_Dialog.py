@@ -1,3 +1,4 @@
+import ctypes
 import hashlib
 import importlib
 import json
@@ -7,20 +8,13 @@ from tkinter import filedialog
 import tkinter
 import zipfile
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout, QApplication, QHBoxLayout, QFrame, QSizePolicy
+from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout, QApplication, QHBoxLayout, QFrame, QSizePolicy, QDialog
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
 import Producer
 import Station_Search
-from window import Pack_Error, Sure_Json_Pack
-import window.Main as Main
-import window.Sure_Delete_Pack as Sure_Delete_Pack
-
-
-KEYED = ""
-NAME = None
-ERROR = None
+from window import Sure_Json_Pack, Main
 
 def load(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -38,9 +32,9 @@ class pack_dialog(QtWidgets.QDialog):
         self.packDialog.get.clicked.connect(self.afterClick)
         self.packDialog.add.clicked.connect(self.afterAdd)
         
-        #首先执行的命令
-        if Sure_Delete_Pack.KEYED != None:
-            self.packDialog.searchText.setText(Sure_Delete_Pack.KEYED)
+        for window in QApplication.topLevelWidgets():
+            if window.objectName() != "Main" and window != self:
+                window.deleteLater()
         
         self.afterClick()
         
@@ -52,12 +46,13 @@ class pack_dialog(QtWidgets.QDialog):
         for filename in os.listdir(Producer.route.resourcePath("pack/")):
             file_path = os.path.join(Producer.route.resourcePath("pack/"), filename)
             if os.path.isfile(file_path):
-                files_name_list.append(filename)
+                files_name_list.append([filename, self.getPackName(Producer.route.resourcePath(file_path))])
                 
         query = self.packDialog.searchText.text()
-        result = Station_Search.fuzzy_search(query, files_name_list)
-        
-        if isinstance(result, list):
+        answer = Station_Search.fuzzy_search(query, [item[1] for item in files_name_list])
+        result = [item[0] for item in files_name_list if item[1] in answer]
+
+        if isinstance(answer, list):
             
             btn_number = 0
             self.buttons = {}
@@ -87,7 +82,7 @@ class pack_dialog(QtWidgets.QDialog):
             horizontal_line.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed))
             head_layout.addWidget(horizontal_line, 1)
             
-            for pack_name in files_name_list:
+            for pack_name in [item[0] for item in files_name_list]:
                 
                 if self.getUUID(Producer.route.resourcePath(f"pack/{pack_name}")) == self.getUUID(Producer.route.resourcePath("data/Data.py")):
                     pack.setText(f"当前使用的资源包是 {self.getPackName(Producer.route.resourcePath(f'pack/{pack_name}'))}")  
@@ -132,7 +127,7 @@ class pack_dialog(QtWidgets.QDialog):
                     button.setMinimumSize(60, 30)  
                     button.setStyleSheet("""
                     QPushButton {
-                        border: 2px solid gray; 
+                        border: 2px solid red; 
                         background-color: white; 
                         border-radius: 10px; 
                         color: red;
@@ -142,7 +137,7 @@ class pack_dialog(QtWidgets.QDialog):
                     }
                     QPushButton:pressed {
                         background-color: rgb(190, 190, 190); 
-                        border: 2px solid #33373E; 
+                        border: 2px solid rgb(139, 0, 0); 
                     }
                     """)
                     every_layout.addWidget(button)  
@@ -192,25 +187,26 @@ class pack_dialog(QtWidgets.QDialog):
         if file.endswith(".zip"):
             Sure_Json_Pack.TEXT = "您确定要更换资源包？如确定窗口将会重启"
             Sure_Json_Pack.BTN = button_number
-            Sure_Json_Pack.sure().show()
+            Sure_Json_Pack.sure().exec_()
                 
     
     def afterDeleteClick(self, button_number):
         
         self.afterClick()
         if len(self.names) != 0:
-            Sure_Delete_Pack.KEYED = None
-            global KEYED
-            KEYED = self.packDialog.searchText.text()
             
-            Sure_Delete_Pack.TEXT = "您确定要删除资源包？删除后的资源包将永久丢失"
-            Sure_Delete_Pack.BTN = button_number
-            Sure_Delete_Pack.sure().show()
+            for name in self.names:
+                if name[0] == button_number:
+                    NAME = name[1]
+                    
+            result = sure().exec_()  # 显示对话框并获取返回值
+
+            if result == QDialog.Accepted:
+                os.remove(Producer.route.resourcePath(f"pack/{NAME}"))
+                self.afterClick()
         
         else:
-            global ERROR
-            ERROR = "搜索结果为空"
-            Pack_Error.error().show()
+            error().exec_()
         
             
     def clearLayout(self, layout):
@@ -264,7 +260,7 @@ class pack_dialog(QtWidgets.QDialog):
             if not file_path:
                 return
             
-            target_folder = Producer.route.resourcePath(Producer.route.resourcePath("pack/"))
+            target_folder = Producer.route.resourcePath("pack/")
             
             file_name = os.path.basename(file_path)
             
@@ -277,3 +273,34 @@ class pack_dialog(QtWidgets.QDialog):
 
         addFiletoFolder()
         self.afterClick()
+        
+        
+class sure(QtWidgets.QDialog):
+    
+    def __init__(self):
+
+        ctypes.windll.user32.MessageBeep(0x00000010)
+        
+        super().__init__()
+        self.sureDialog = uic.loadUi(Producer.route.resourcePath("window/ui/sure.ui"), self)
+        
+        self.sureDialog.que.setText("您确定要删除资源包？删除后的资源包将永久丢失")
+        
+        self.sureDialog.yes.clicked.connect(self.accept)
+        self.sureDialog.cancel.clicked.connect(self.reject)
+    
+    def closeEvent(self, event):
+        event.ignore()
+        self.sureDialog.deleteLater()
+        
+        
+        
+class error(QtWidgets.QDialog):
+    
+    def __init__(self):
+
+        super().__init__()
+        self.errorDialog = uic.loadUi(Producer.route.resourcePath("window/ui/error.ui"), self)
+        
+        ctypes.windll.user32.MessageBeep(0x00000010)
+        self.errorDialog.error.setText("搜索结果为空")

@@ -98,7 +98,7 @@ class ruleText:
                 result += " "
                 
         result = result.split("1te1")[0]
-        result = result.replace("1o1", " ").replace("_", "/").replace("1so1", "'s").replace("1si1", "s'").replace("1te1", "")
+        result = result.replace("1o1", " ").replace("_", " / ").replace("1te1", "").replace("1d1",".").replace("1h1","-").replace("1c1",",").replace("1n1","").replace("1q1","'").replace("1a1","&")
         return result   
     
     
@@ -116,7 +116,7 @@ class ruleText:
                 result += " "
         
         result = result.split("1tc1")[0]
-        result = result.replace("1o1", " ").replace("_", "/").replace("1so1", "'s").replace("1si1", "s'").replace("1tc1", "").replace("1h1","-")
+        result = result.replace("1o1", " ").replace("_", "/").replace("1tc1", "").replace("1h1","-").replace("1d1","·").replace("1q1","'")
         return result   
     
     
@@ -258,6 +258,7 @@ class route:
                     
         return([start_line_list,end_line_list,start_line_and_number,end_line_and_number])
     
+    
     def stationRouteServel(StationName):
         """获取站点所在的线路列表"""
         
@@ -285,6 +286,28 @@ class route:
                 
         return(line_and_number)
         
+        
+    def getMaxNumber(Route):
+        """获取一条线路中存在最大编号的编号组"""
+        
+        lst = []
+        max_lst = []
+        for servel in station:
+            
+            for eo in servel[:-1]:
+                
+                if eo[0] == Route:
+                    lst.append(eo[1:])
+        
+        for servel_lst in lst:
+            
+            max_lst.append(max(servel_lst))
+            
+        for servel_lst in lst:
+            
+            if max(max_lst) in servel_lst:
+                return(servel_lst)
+                    
         
     def resourcePath(relative_path):
         """获取资源的绝对路径，适用于Dev和PyInstaller"""

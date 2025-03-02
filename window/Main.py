@@ -9,7 +9,6 @@ import Producer
 from window import Plan_Dialog, Search_Dialog, Select_Route, Main_Error as Error, Pack_Dialog, Setting
 
 
-ERROR = "请先关闭当前除主窗口外的所有窗口"
 JUDGE = False
 
 class main(QtWidgets.QDialog):
@@ -44,37 +43,32 @@ class main(QtWidgets.QDialog):
         
         
     def Settings(self):
-        
         self.clearAll()
         global JUDGE
         JUDGE = True  
-        Setting.setting_dialog().show()
+        Setting.setting_dialog().exec_()
         
     def Route(self):
-
         self.clearAll()
         global JUDGE
         JUDGE = True  
-        Select_Route.select_route().show()
+        Select_Route.select_route().exec_()
             
     def Plan(self):
-
         self.clearAll()
         global JUDGE
         JUDGE = True  
-        Plan_Dialog.plan_dialog().show()
+        Plan_Dialog.plan_dialog().exec_()
         
     def Search(self):
-
         self.clearAll()
         global JUDGE
         JUDGE = True  
-        Search_Dialog.search_dialog().show()
+        Search_Dialog.search_dialog().exec_()
             
     def Pack(self):
-        
         self.clearAll()
-        Pack_Dialog.pack_dialog().show()
+        Pack_Dialog.pack_dialog().exec_()
             
     def scroll_plus(self):
         if self.num < len(self.covers) - 1:
@@ -99,8 +93,6 @@ class main(QtWidgets.QDialog):
         sys.exit()
         
     def clearAll(self):
-        global JUDGE
-        JUDGE = False  
         for window in QApplication.topLevelWidgets():
             if window.objectName() != "Main":
                 window.deleteLater()

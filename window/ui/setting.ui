@@ -41,13 +41,85 @@
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="150,618">
    <property name="spacing">
     <number>6</number>
    </property>
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="make">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>黑体</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border-radius: 10px;
+	border: 2px solid rgb(159,80,105);
+    background-color: rgb(159,80,105);  
+	color: white;   
+}
+QPushButton:hover {
+    background-color: rgb(149,70,95);
+}
+QPushButton:pressed {
+	border: 2px solid rgb(149,70,95);
+    background-color: rgb(149,70,95);
+}</string>
+       </property>
+       <property name="text">
+        <string>自定义资源包文件</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bind">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>黑体</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border-radius: 10px;
+	border: 2px solid rgb(157,133,127);
+    background-color: rgb(157,133,127);  
+	color: white;   
+}
+QPushButton:hover {
+    background-color: rgb(147,123,117);
+}
+QPushButton:pressed {
+	border: 2px solid rgb(147,123,117);
+    background-color: rgb(147,123,117);
+}</string>
+       </property>
+       <property name="text">
+        <string>绑定地图与资源包</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="styleSheet">
@@ -60,7 +132,7 @@
      <property name="title">
       <string/>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="618,0,0,0">
       <item>
        <widget class="QLabel" name="version">
         <property name="font">
@@ -76,6 +148,179 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <family>黑体</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>从以下渠道可以联系或支持作者</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bilibili">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	border-radius: 10px;
+	border: 2px solid rgb(252,138,170);
+    background-color: rgb(252,138,170);  
+	color: white;   
+}
+QPushButton:hover {
+    background-color: rgb(242,128,160);
+}
+QPushButton:pressed {
+	border: 2px solid rgb(242,128,160);
+    background-color: rgb(242,128,160);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>bilibili.png</normaloff>bilibili.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="aifadian">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	border-radius: 10px;
+	border: 2px solid rgb(154,115,230);
+    background-color: rgb(154,115,230);  
+	color: white;   
+}
+QPushButton:hover {
+    background-color: rgb(144,105,220);
+}
+QPushButton:pressed {
+	border: 2px solid rgb(144,105,220);
+    background-color: rgb(144,105,220);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>aifadian.png</normaloff>aifadian.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="github">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	border-radius: 10px;
+	border: 2px solid rgb(30,30,30);
+    background-color: rgb(30,30,30);  
+	color: white;   
+}
+QPushButton:hover {
+    background-color: rgb(20,20,20);
+}
+QPushButton:pressed {
+	border: 2px solid rgb(20,20,20);
+    background-color: rgb(20,20,20);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>github.png</normaloff>github.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

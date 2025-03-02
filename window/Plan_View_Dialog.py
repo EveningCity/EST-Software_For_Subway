@@ -1,3 +1,4 @@
+import ctypes
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QPushButton, QLabel, QVBoxLayout, QApplication, QGroupBox, QFrame, QHBoxLayout, QSizePolicy
 from PyQt5.QtGui import QFont
@@ -7,6 +8,7 @@ from window import Plan_Dialog, Route_Dialog
 import Producer
 
 
+ERROR = None
 ROUTE = None
 
 class planView(QtWidgets.QDialog):
@@ -26,7 +28,15 @@ class planView(QtWidgets.QDialog):
         self.searchDialog.scrollArea.widget().setLayout(self.p_layout) 
         
         #首先执行的命令
-        self.planView()
+        if Plan_Dialog.RESULT != None:
+            self.planView()
+        
+        else:
+            global ERROR
+            ERROR = "查询的线路不在同一线网"
+            errorWindow = error()
+            errorWindow.exec_()
+            self.deleteLater()
             
         
     def planView(self):
@@ -122,12 +132,7 @@ class planView(QtWidgets.QDialog):
             
             
     def afterClick(self):
-        
-        for window in QApplication.topLevelWidgets():
-            if window.objectName() != "Main":
-                window.deleteLater()
-                
-        Plan_Dialog.plan_dialog().show()
+        Plan_Dialog.plan_dialog().exec_()
         
     
     def routeButton(self, servel_route):
@@ -180,3 +185,17 @@ class planView(QtWidgets.QDialog):
     def closeEvent(self, event):
         self.searchDialog.deleteLater()
         event.accept()
+        
+        
+        
+class error(QtWidgets.QDialog):
+    
+    def __init__(self):
+        
+        global ERROR
+
+        super().__init__()
+        self.errorDialog = uic.loadUi(Producer.route.resourcePath("window/ui/error.ui"), self)
+        
+        ctypes.windll.user32.MessageBeep(0x00000010)
+        self.errorDialog.error.setText(ERROR)

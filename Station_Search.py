@@ -19,29 +19,35 @@ for name, value in inspect.getmembers(Data.Station, lambda a: not(inspect.isrout
     if not name.startswith('__'):
         name_list = [value[-1],name]
         
-        if "1tc1" in name or "1tc1" in value[-1]:
+        if "1te1" in name or "1tc1" in value[-1]:
             
             if "1te1" in name:
                 list_EN = name.split("1te1")
                 name_list.insert(3, list_EN[-1])
             else:
-                name_list.insert(3, " ")
+                name_list.insert(3, None)
                 
             if "1tc1" in value[-1]:
                 list_CN = value[-1].split("1tc1")
                 name_list.insert(2, list_CN[-1])
             else:
-                name_list.insert(2, " ")
+                name_list.insert(2, None)
         
         station_name.append(name_list)
+        
 
+# for servel in station_name:
+#     if len(servel) == 2:
+#         servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0])} | {Producer.ruleText.betterEnglish(servel[1])}")
+#     else:
+#         if servel[2] == None:
+#             servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split('1tc1')[0])} | {Producer.ruleText.betterEnglish(servel[1].split('1te1')[0])} ({Producer.ruleText.betterEnglish(servel[3])})")
+#         if servel[3] == None:
+#             servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split('1tc1')[0])} {Producer.ruleText.betterChinese(servel[2])} | {Producer.ruleText.betterEnglish(servel[1].split('1te1')[0])}")
+#         else:
+#             servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split('1tc1')[0])} {Producer.ruleText.betterChinese(servel[2])} | {Producer.ruleText.betterEnglish(servel[1].split('1te1')[0])} ({Producer.ruleText.betterEnglish(servel[3])})")
 
-for servel in station_name:
-    if len(servel) == 2:
-        servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0])} | {Producer.ruleText.betterEnglish(servel[1])}")
-    else: 
-        servel.insert(2, f"{Producer.ruleText.betterChinese(servel[0].split('1tc1')[0])} {Producer.ruleText.betterChinese(servel[2])} | {Producer.ruleText.betterEnglish(servel[1].split('1te1')[0])} ({Producer.ruleText.betterEnglish(servel[3])})")
-
+           
 
 def fuzzy_search(query, choices):
     

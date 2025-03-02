@@ -1,0 +1,391 @@
+{
+    "pack_name": "鹅山资源包",
+    "uuid": "0df1d8bf-2ff1-440f-af19-0ee3863b5784",
+
+    "routes_EN": [
+        "1",
+        "2",
+        "4",
+        "6",
+        "S5",
+        "XP",
+        "XPZ",
+        "XR",
+        "XG",
+        "SD",
+        "HL1",
+        "HL2",
+        "HL5",
+        "HL8",
+        "HL16",
+        "HL17",
+        "HL20",
+        "HL20SW",
+        "HLS3"
+    ],
+    
+    "routes_CN": {
+        "1号线（凤岗线）":"1",
+        "2号线（东西线）":"2",
+        "4号线（富乐线）":"4",
+        "6号线（嘉文线）":"6",
+        "S5号线（进武线）":"S5",
+        "新平城际（主线）":"XP",
+        "新平城际（支线）":"XPZ",
+        "郗县捷运红线":"XR",
+        "郗县捷运绿线":"XG",
+        "铁研试验线":"SD",
+        "互利1号线":"HL1",
+        "互利2号线":"HL2",
+        "互利5号线":"HL5",
+        "互利8号线":"HL8",
+        "互利16号线":"HL16",
+        "互利17号线":"HL17",
+        "互利20号线":"HL20",
+        "互利20号线（商务）":"HL20SW",
+        "互利S3号线":"HLS3"
+    },
+    
+    "above": {
+        "1": "开往 凤岗里 方向",
+        "2": "开往 市医学院 方向",
+        "4": "开往 安平财大 方向",
+        "6": "开往 流芳 方向",
+        "S5": "开往 九龙湖街 方向",
+        "XP": "开往 黄龙国际机场 方向",
+        "XPZ": "开往 黄龙国际机场 方向",
+        "XR": "内环 方向",
+        "XG": "开往 荷花池头 方向",
+        "SD": "开往 铁研中心 方向",
+        "HL1": "开往 互利新港 方向",
+        "HL2": "开往 祖庙 方向",
+        "HL5": "开往 东方路 方向",
+        "HL8": "开往 海底神殿 方向",
+        "HL16": "开往 黄龙国际机场 方向",
+        "HL17": "开往 悬树 方向",
+        "HL20": "开往 互利南站 方向",
+        "HL20SW": "开往 互利南站 方向",
+        "HLS3": "开往 互利东站 方向"
+    },
+    
+    "below": {
+        "1": "开往 体育中心 方向",
+        "2": "开往 明华路 方向",
+        "4": "开往 郗县/下港 方向",
+        "6": "开往 九重天 方向",
+        "S5": "开往 五岔路口 方向",
+        "XP": "开往 新权南山 方向",
+        "XPZ": "开往 方舟广场 方向",
+        "XR": "外环 方向",
+        "XG": "开往 漫水桥村 方向",
+        "SD": "开往 铁研中心 方向",
+        "HL1": "开往 互利东站 方向",
+        "HL2": "开往 星湖 方向",
+        "HL5": "开往 滨海家园 方向",
+        "HL8": "开往 弗卢伊特村 方向",
+        "HL16": "开往 互利北站 方向",
+        "HL17": "开往 芫荽 方向",
+        "HL20": "开往 黄兴 方向",
+        "HL20SW": "开往 五岔路口 方向",
+        "HLS3": "开往 滨海家园 方向"
+    },
+    
+    "time": {
+        "1":"首班车  06:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",      
+        "2":"首班车  06:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
+        "4":"首班车  06:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
+        "6":"首班车  06:00\n末班车  23:00\n（小交路约3分钟/班，大交路约5分钟/班）",
+        "S5":"首班车  06:00\n末班车  00:00\n（约5分钟/班）",
+        "XP":"首班车  07:00\n末班车  23:00\n（约5分钟/班）",
+        "XPZ":"首班车  06:00\n末班车  23:00\n（约5分钟/班）",
+        "XR":"首班车  06:00\n末班车  23:00\n（约2分钟/班）",
+        "XG":"首班车  06:00\n末班车  23:00\n（约2分钟/班）",
+        "SD": "首班车  09:00\n末班车  17:00\n（约9分钟/班）",
+        "HL1":"首班车  06:00\n末班车  23:00\n（约3分钟/班）",
+        "HL2":"首班车  06:00\n末班车  23:00\n（约2分钟/班）",
+        "HL5":"首班车  06:00\n末班车  23:00\n（约3分钟/班）",
+        "HL8":"首班车  06:00\n末班车  23:00\n（约3分钟/班）",
+        "HL16":"首班车  06:00\n末班车  00:00\n（约5分钟/班）",
+        "HL17":"首班车  06:00\n末班车  23:00\n（约5分钟/班）",
+        "HL20":"首班车  06:00\n末班车  23:00\n（约5分钟/班）",
+        "HL20SW":"首班车  07:00\n末班车  22:00\n（约5分钟/班）",
+        "HLS3":"首班车  06:00\n末班车  23:00\n（约3分钟/班）"
+    },
+
+    "color": {
+        "1":"rgb(201,49,43)",
+        "2":"rgb(220,159,70)",
+        "4":"rgb(102,184,156)",
+        "6":"rgb(127,0,255)",
+        "S5":"rgb(25,86,94)",
+        "XP":"rgb(255,85,153)",
+        "XPZ":"rgb(255,85,153)",
+        "XR":"rgb(160,37,42)",
+        "XG":"rgb(0,117,75)",
+        "SD":"rgb(153,141,168)",
+        "HL1":"rgb(208,23,34)",
+        "HL2":"rgb(0,0,139)",
+        "HL5":"rgb(221,0,102)",
+        "HL8":"rgb(41,109,35)",
+        "HL16":"rgb(107,184,177)",
+        "HL17":"rgb(255,0,204)",
+        "HL20":"rgb(188,111,55)",
+        "HL20SW":"rgb(108,52,97)",
+        "HLS3":"rgb(107,142,35)"
+    },
+
+    "branch_lines": [
+        ["XP","XPZ"],
+        ["False","HL20SW"]
+    ],
+
+    "direct_lines":[
+        ["SD","开往 铁研中心 方向"]
+    ],
+
+    "lines":{
+
+        "Line_1": {
+            "Fenggangli": [[1],"凤岗里","暂无"],
+            "KaiShekMemorial": [[2],"蒋公庙","暂无"],
+            "RikakoRoad": [[3],"仙梨路","暂无"],
+            "WenlanRoad": [[4],"文澜路","暂无"],
+            "Asahino_Fulok": [[5],"金花/富乐","暂无"],
+            "HujiHinge": [[6],"湖际火车站","暂无"],
+            "TechnologyBuilding":[[7],"科技大楼","暂无"],
+            "Jinjialin": [[8],"金家林","暂无"],
+            "ArkSquare": [[9],"方舟广场","※无障碍电梯：\n1号线、新平城际站厅站台首尾端\n2号线站厅站台中部\n所有出入口"],
+            "SportsCenter": [[10],"体育中心","暂无"]
+        },
+
+        "Line_2": {
+            "MinghuaRoad": [[16],"明华路","暂无"],
+            "XiyaSouth": [[15],"犀崖南","暂无"],
+            "YunlanRoad": [[14],"云岚路","暂无"],
+            "TechInnovationPark": [[13],"科创园","暂无"],
+            "HuaxingPort": [[12],"华兴湾","暂无"],
+            "AnpingFinancialUniversity": [[11],"安平财大","暂无"],
+            "JunpengRoad": [[10],"俊鹏路","※无障碍电梯：\n站台两端\nA出入口"],
+            "TangpuRoad": [[9],"塘埔路","※无障碍电梯：\n2号线、6号线站台中部\n2号线至6号线换乘通道\n2号线至6号线站厅连接处\nA出入口"],
+            "ArkSquare": [[8],"方舟广场","※无障碍电梯：\n1号线、新平城际站厅站台首尾端\n2号线站厅站台中部\n所有出入口"],
+            "Mingguang": [[7],"明光","※无障碍电梯：\n各站厅站台\nA出入口"],
+            "AnpingLibrary": [[6],"市图书馆","暂无"],
+            "PingxiBambooForest": [[5],"平溪竹海","暂无"],
+            "CheckerboardGeopark": [[4],"格仔公园","暂无"],
+            "WuchaFlyover": [[3],"五岔路口","※无障碍电梯：\n2号线、S5号线站台首尾端\n5号线站台内环方向首端\nA、B出入口"],
+            "FuanRoad": [[2],"福安路","暂无"],
+            "MedicalCollege": [[1],"市医学院","暂无"]
+        },
+
+        "Line_4": {
+            "AnpingFinancialUniversity": [[1],"安平财大","暂无"],
+            "JiefangSquare": [[2],"解放广场","暂无"],
+            "FisheryCollege": [[3],"水产学院","暂无"],
+            "AnpingAcientCity": [[4],"安平古城","暂无"],
+            "Jinjialin": [[5],"金家林","暂无"],
+            "AirportRunwaySite": [[6],"机场跑道旧址","暂无"],
+            "Asahino_Fulok": [[7],"金花/富乐","暂无"],
+            "CoachTerminal": [[8],"汽车总站","暂无"],
+            "Yuewanglou": [[9],"越王楼","暂无"],
+            "RikakoRoad": [[10],"仙梨路","暂无"],
+            "SRG1o1EXPO": [[11],"银江大会展中心","暂无"],
+            "TaichiIsland": [[12],"太极岛","暂无"],
+            "ZhouyuEastRoad": [[13],"周瑜东路","暂无"],
+            "Xixian_Xiagang": [[14],"郗县/下港","暂无"]
+        },
+
+        "Line_6": {
+            "Liufang": [[1],"流芳","暂无"],
+            "CBCZ": [[2],"跨境合作区","暂无"],
+            "PakShekKok": [[3],"白石角","暂无"],
+            "AnpingSciencePark": [[4],"安平科学园","暂无"],
+            "FoutrhKangdingRoad": [[5],"康定四路","暂无"],
+            "Gongxingdao": [[6],"公行道","暂无"],
+            "CangshanRoad": [[7],"苍山路","暂无"],
+            "ErhaiRoad": [[8],"洱海路","暂无"],
+            "MarbleArch": [[9],"凯旋门","暂无"],
+            "SportsCenter": [[10],"体育中心","暂无"],
+            "TangpuRoad": [[11],"塘埔路","※无障碍电梯：\n2号线、6号线站台中部\n2号线至6号线换乘通道\n2号线至6号线站厅连接处\nA出入口"],
+            "FisheryCollege": [[12],"水产学院","暂无"],
+            "HaitangPark": [[13],"海棠公园","暂无"],
+            "Jiuchongtian": [[14],"九重天","暂无"]
+        },
+
+        "Line_S5": {
+            "JiulonghuStreet": [[1],"九龙湖街","暂无"],
+            "Yansui": [[2],"芫荽","暂无"],
+            "Huangxing": [[3],"黄兴","暂无"],
+            "Jizhou": [[4],"济舟","暂无"],
+            "BaishaLake": [[5],"白沙湾","暂无"],
+            "XiyaNorth": [[6],"犀崖北","暂无"],
+            "AnpingFinancialUniversity": [[7],"安平财大","暂无"],
+            "Mingguang": [[8],"明光","※无障碍电梯：\n各站厅站台\nA出入口"],
+            "WuchaFlyover": [[9],"五岔路口","※无障碍电梯：\n2号线、S5号线站台首尾端\n5号线站台内环方向首端\nA、B出入口"]
+        },
+
+        "Line_XP": {
+            "HuanglongInternationalAirport": [[1],"黄龙国际机场","暂无"],
+            "JiulonghuStreet": [[2],"九龙湖街","暂无"],
+            "Sangzhi": [[3],"桑植","暂无"],
+            "SinkholeVillage": [[4],"天坑村","暂无"],
+            "Fred1so1Beach": [[5],"弗雷德沙滩","暂无"],
+            "ShuangliNewTownEast": [[6],"双鲤新城东","暂无"],
+            "BinhaiWestAvene": [[7],"滨海西大道","暂无"],
+            "Asahino_Fulok": [[8],"金花/富乐","暂无"],
+            "Cenmentery": [[9],"烈士陵园","暂无"],
+            "SRG1o1EXPO": [[10],"银江大会展中心","暂无"],
+            "XixianSouth": [[11],"郗县南","暂无"],
+            "Xixian_Xiagang": [[12],"郗县/下港","暂无"],
+            "XixianWest": [[13],"郗县西","暂无"],
+            "Gongjiatai": [[14],"贡家台","暂无"],
+            "Bamaojing": [[15],"八毛井","暂无"],
+            "ShanmaojuIsland": [[16],"山毛榉岛","暂无"],
+            "XinquanNanshan": [[17],"新权南山","暂无"]
+        },
+
+        "Line_XPZ": {
+            "HuanglongInternationalAirport": [[1],"黄龙国际机场","暂无"],
+            "JiulonghuStreet": [[2],"九龙湖街","暂无"],
+            "Sangzhi": [[3],"桑植","暂无"],
+            "SinkholeVillage": [[4],"天坑村","暂无"],
+            "Fred1so1Beach": [[5],"弗雷德沙滩","暂无"],
+            "ShuangliNewTownEast": [[6],"双鲤新城东","暂无"],
+            "BinhaiWestAvene": [[7],"滨海西大道","暂无"],
+            "HujiHinge": [[8],"湖际火车站","暂无"],
+            "Jinjialin": [[9],"金家林","暂无"],
+            "ArkSquare": [[10],"方舟广场","※无障碍电梯：\n1号线、新平城际站厅站台首尾端\n2号线站厅站台中部\n所有出入口"]
+        },
+
+        "Line_XR": {
+            "ZhouyuEastRoad": [[6, 24],"周瑜东路","暂无"],
+            "XixianAdminCenter": [[7, 23],"县行政中心","暂无"],
+            "CrowdedForest": [[8, 22],"薮渊之林","暂无"],
+            "LakeviewMansion": [[9, 21],"滨湖居","暂无"],
+            "SnowhillTouristCenter": [[10, 20],"雪山城市客厅","暂无"],
+            "MingquanWestRoad": [[11, 19],"民权西路","暂无"],
+            "Liangkeshu": [[12, 18],"两棵树","暂无"],
+            "DeshengGatePark": [[1, 17],"德胜门遗址公园","暂无"],
+            "TongyiPort": [[2, 16],"同益码头","暂无"],
+            "Baihuatan": [[3, 15],"百花潭","暂无"],
+            "XixianSouth": [[4, 14],"郗县南","暂无"],
+            "FiveKilometers": [[5, 13],"五公里","暂无"]
+        },
+
+        "Line_XG": {
+            "LotusPond": [[1],"荷花池头","暂无"],
+            "XixianWest": [[2],"郗县西","暂无"],
+            "Berlin": [[3],"柏林","暂无"],
+            "CrowdedForest": [[4],"薮渊之林","暂无"],
+            "XixianAdminCenter": [[5],"县行政中心","暂无"],
+            "ZhouyuEastRoad": [[6],"周瑜东路","暂无"],
+            "FiveKilometers": [[7],"五公里","暂无"],
+            "XixianSouth": [[8],"郗县南","暂无"],
+            "ManshuiqiaoVillage": [[9],"漫水桥村","暂无"]
+        },
+
+        "Line_SD": {
+            "SangyuanEast": [[3,0],"桑园东","暂无"],
+            "QiushanMountain": [[0,4],"秋山","暂无"],
+            "QingshuiheRiver": [[2,0],"清水河","暂无"],
+            "RailwayResearchCenter": [[1,5],"铁研中心","暂无"]
+        },
+
+        "Line_HL1": {
+            "HarmonyNewPort": [[1],"互利新港","暂无"],
+            "Haizhiyun": [[2],"海之韵","暂无"],
+            "SubCenter": [[3],"副中心","暂无"],
+            "HarmonyNorthRailwayStation": [[4],"互利北站","暂无"],
+            "Xinghu": [[5],"星湖","暂无"],
+            "HarmonySquare": [[6],"互利广场","暂无"],
+            "QihaiVillage": [[7],"七海村","暂无"],
+            "HongweiLanshan": [[8],"鸿玮澜山","暂无"],
+            "FuanSouth": [[9],"阜安南","暂无"],
+            "HarmonyEastRailwayStation": [[10],"互利东站","暂无"]
+        },
+
+        "Line_HL2": {
+            "ZumiaoTemple": [[1],"祖庙","暂无"],
+            "Costa": [[2],"海角","暂无"],
+            "Huaxiangshan": [[3],"花响山","暂无"],
+            "Xinghu": [[4],"星湖","暂无"]
+        },
+
+        "Line_HL5": {
+            "DongfangRoad": [[1],"东方路","暂无"],
+            "HongmeiRoad": [[2],"红梅路","暂无"],
+            "BinhaiJiayuan": [[3],"滨海家园","暂无"]
+        },
+
+        "Line_HL8": {
+            "UnderwaterTemple": [[1],"海底神殿","暂无"],
+            "Xiaoximen": [[2],"小西门","暂无"],
+            "ExpoCenter": [[3],"会展中心","暂无"],
+            "Xinghu": [[4],"星湖","暂无"],
+            "HongqiEastRoad": [[5],"红旗东路","暂无"],
+            "LihuaRoad": [[6],"丽华路","暂无"],
+            "FuluMiddleSchool": [[7],"弗卢中学","暂无"],
+            "FuluYiteVillage": [[8],"阜安山","暂无"]
+        },
+
+        "Line_HL16": {
+            "HuanglongInternationalAirport": [[1],"黄龙国际机场","暂无"],
+            "JinwuNorth": [[2],"进武北","暂无"],
+            "Honggudi": [[3],"红谷地","暂无"],
+            "AgricultureAcademy1te1New1o1Filed": [[4],"省农科院1tc1新田地","暂无"],
+            "DongfangRoad": [[5],"东方路","暂无"],
+            "Gaotianyuan": [[6],"高天原","暂无"],
+            "Gubei": [[7],"古北","暂无"],
+            "Costa": [[8],"海角","暂无"],
+            "Haixin": [[9],"塰欣","暂无"],
+            "HarmonyNorthRailwayStation": [[10],"互利北站","暂无"]
+        },
+
+        "Line_HL17": {
+            "Xuanshu": [[1],"悬树","暂无"],
+            "SangyuanNorth": [[2],"桑园北","暂无"],
+            "WanyanRiver": [[3],"蜿蜒河","暂无"],
+            "RailwayResearchCenter": [[4],"铁研中心","暂无"],
+            "SangyuanInternationalAirport": [[5],"桑园国际机场","暂无"],
+            "XinglinWest": [[6],"杏林西","暂无"],
+            "ChangqingRoad": [[7],"常青路","暂无"],
+            "Kaishan": [[8],"开山","暂无"],
+            "CinnamonRoad": [[9],"桂香路","暂无"],
+            "HuanglongInternationalAirport": [[10],"黄龙国际机场","暂无"],
+            "Yongning": [[11],"永宁","暂无"],
+            "Yansui": [[12],"芫荽","暂无"]
+        },
+
+        "Line_HL20": {
+            "HarmonySouthRailwayStation": [[1],"互利南站","暂无"],
+            "HarmonySouthSide": [[2],"凛冰南界","暂无"],
+            "Qingling": [[3],"清灵","暂无"],
+            "LauraCreekside": [[4],"劳拉溪畔","暂无"],
+            "LinglengEstuary": [[5],"泠棱江口","暂无"],
+            "Daokaibi": [[6],"道开壁","暂无"],
+            "TunyuShore": [[7],"豚雨石岸","暂无"],
+            "Huangxing": [[8],"黄兴","暂无"]
+        },
+
+        "Line_HL20SW": {
+            "HarmonySouthRailwayStation": [[1],"互利南站","暂无"],
+            "Huangxing": [[2],"黄兴","暂无"],
+            "Jizhou": [[3],"济舟","暂无"],
+            "BaishaLake": [[4],"白沙湾","暂无"],
+            "XiyaNorth": [[5],"犀崖北","暂无"],
+            "AnpingFinancialUniversity": [[6],"安平财大","暂无"],
+            "Mingguang": [[7],"明光","※无障碍电梯：\n各站厅站台\nA出入口"],
+            "WuchaFlyover": [[8],"五岔路口","※无障碍电梯：\n2号线、S5号线站台首尾端\n5号线站台内环方向首端\nA、B出入口"]
+        },
+
+        "Line_HLS3": {
+            "HarmonyEastRailwayStation": [[1],"互利东站","暂无"],
+            "Fuan": [[2],"阜安","暂无"],
+            "FuanMountain": [[3],"阜安山","暂无"],
+            "FuluYiteVillage": [[4],"弗卢伊特村","暂无"],
+            "QihaiVillage": [[5],"七海村","暂无"],
+            "UnderwaterTemple": [[6],"海底神殿","暂无"],
+            "Jinshan": [[7],"金山","暂无"],
+            "BinhaiJiayuan": [[8],"滨海家园","暂无"]
+        }
+    }
+}

@@ -6,15 +6,12 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
 from window import Searched_of_Search_Dialog
-import Plan, Producer, window.Plan_Error as Plan_Error, window.Searched_of_Start_Dialog as Searched_of_Start_Dialog, window.Searched_of_End_Dialog as Searched_of_End_Dialog, window.Search_Plan_Dialog as Search_Plan_Dialog
+import Plan, Producer, window.Searched_of_Start_Dialog as Searched_of_Start_Dialog, window.Searched_of_End_Dialog as Searched_of_End_Dialog, window.Search_Plan_Dialog as Search_Plan_Dialog
 from window import Searched_of_Route_Dialog,Plan_View_Dialog,Main
 
 
 DIRECTION = None
-NAME = None
 ERROR = None
-START_DATA = None
-END_DATA = None
 RESULT = None
 
 class plan_dialog(QtWidgets.QDialog):
@@ -28,36 +25,21 @@ class plan_dialog(QtWidgets.QDialog):
         self.planDialog.searchStart.clicked.connect(self.searchStartStation)
         self.planDialog.searchEnd.clicked.connect(self.searchEndStation)
         self.planDialog.mode.clicked.connect(self.changeMode)
-        global END_DATA, START_DATA
+        self.setObjectName("Plan")
         
-        if Searched_of_Start_Dialog.STATION != None:
-            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Start_Dialog.STATION))
-            Searched_of_Start_Dialog.STATION = None
-        elif Searched_of_End_Dialog.START_DATA != None:
-            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_End_Dialog.START_DATA))
-            Searched_of_End_Dialog.START_DATA = None
-            START_DATA = None
-        elif Searched_of_Search_Dialog.STATION_START != None:
-            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Search_Dialog.STATION_START))
-            Searched_of_Search_Dialog.STATION_START = None
-        elif Searched_of_Route_Dialog.STATION_START != None:
-            self.planDialog.startText.setText(Producer.ruleText.better(Searched_of_Route_Dialog.STATION_START))
-            Searched_of_Route_Dialog.STATION_START = None
+        for window in QApplication.topLevelWidgets():
+            if window.objectName() not in ["Main", "Plan"]:
+                window.deleteLater()
         
-        if Searched_of_End_Dialog.STATION != None:
-            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_End_Dialog.STATION))
-            Searched_of_End_Dialog.STATION = None
-        elif Searched_of_Start_Dialog.END_DATA != None:
-            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Start_Dialog.END_DATA))
-            Searched_of_Start_Dialog.END_DATA = None
-            END_DATA = None
-        elif Searched_of_Search_Dialog.STATION_END != None:
-            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Search_Dialog.STATION_END))
-            Searched_of_Search_Dialog.STATION_END = None
-        elif Searched_of_Route_Dialog.STATION_END != None:
-            self.planDialog.endText.setText(Producer.ruleText.better(Searched_of_Route_Dialog.STATION_END))
-            Searched_of_Route_Dialog.STATION_END = None
+            
+    def fillAir(self, data):
         
+        if data[1] == "Start":
+            self.planDialog.startText.setText(data[0])
+            
+        elif data[1] == "End":
+            self.planDialog.endText.setText(data[0])
+            
             
     def afterClick(self):
         
@@ -107,8 +89,8 @@ class plan_dialog(QtWidgets.QDialog):
             # 创建一个错误消息框
             global ERROR
             ERROR = Producer.route.begin(Start,End)
-            errorWindow = Plan_Error.error()
-            errorWindow.show()
+            errorWindow = error()
+            errorWindow.exec_()
             ctypes.windll.user32.MessageBeep(0x00000010)
             
             if Producer.route.begin(Start,End) == Producer.errorCode.ERROR001:
@@ -142,42 +124,38 @@ class plan_dialog(QtWidgets.QDialog):
             if Producer.route.judgeLine(start_line_list,end_line_list)[0] == Producer.passCode.PASS002:
                 result_list = Plan.plan.resultSameRoute(start_line_list,end_line_list,start_line_and_nummber,end_line_and_nummber)               
                 RESULT = result_list
-                Plan_View_Dialog.planView().show()
+                Plan_View_Dialog.planView().exec_()
 
             # 位于不同线路上
             elif Producer.route.judgeLine(start_line_list,end_line_list)[0] == Producer.passCode.PASS003:
                 result_list = Plan.plan.resultDifferentRoute(start_line_list,end_line_list,start_line_and_nummber,end_line_and_nummber)
                 RESULT = result_list
-                Plan_View_Dialog.planView().show()
+                Plan_View_Dialog.planView().exec_()
                 
     def searchStartStation(self):
         
-        global DIRECTION, END_DATA
+        global DIRECTION
         DIRECTION = "Start"
-        END_DATA = self.planDialog.endText.text()
-        searchStart = Search_Plan_Dialog.search_plan_dialog()
-        searchStart.show()
+        searchStart = Search_Plan_Dialog.search_plan_dialog(function=self.judge)
+        searchStart.exec_()
         
         
     def searchEndStation(self):
         
-        global DIRECTION, START_DATA
+        global DIRECTION
         DIRECTION = "End"
-        START_DATA = self.planDialog.startText.text()
-        searchEnd = Search_Plan_Dialog.search_plan_dialog()
-        searchEnd.show()
+        searchEnd = Search_Plan_Dialog.search_plan_dialog(function=self.judge)
+        searchEnd.exec_()
         
         
     def changeMode(self):
         
-        global ERROR, END_DATA, START_DATA
+        global ERROR
         ERROR = "请注意在切换模式时，已输入的所有内容将会消失！"
-        START_DATA = None
-        END_DATA = None
         
         if self.planDialog.mode.text() == "选择模式":
-            errorWindow = Plan_Error.error()
-            errorWindow.show()
+            errorWindow = error()
+            errorWindow.exec_()
             ctypes.windll.user32.MessageBeep(0x00000010)
             self.planDialog.mode.setText("手写模式")
             self.planDialog.searchStart.setDisabled(True)
@@ -188,8 +166,8 @@ class plan_dialog(QtWidgets.QDialog):
             self.planDialog.endText.setText("")
         
         elif self.planDialog.mode.text() == "手写模式":
-            errorWindow = Plan_Error.error()
-            errorWindow.show()
+            errorWindow = error()
+            errorWindow.exec_()
             ctypes.windll.user32.MessageBeep(0x00000010)
             self.planDialog.mode.setText("选择模式")
             self.planDialog.searchStart.setDisabled(False)
@@ -200,9 +178,41 @@ class plan_dialog(QtWidgets.QDialog):
             self.planDialog.endText.setText("")
             
             
+    def judge(self, NAME, mode):
+        
+        if mode == "Start":
+            searchedDialog = Searched_of_Start_Dialog.searched_start_dialog(NAME)
+            searchedDialog.signal.connect(self.startSignal)
+            searchedDialog.exec_()
+        
+        elif mode == "End":
+            searchedDialog = Searched_of_End_Dialog.searched_end_dialog(NAME)
+            searchedDialog.signal.connect(self.endSignal)
+            searchedDialog.exec_()
+            
+    
+    def startSignal(self, data):
+        
+        self.planDialog.startText.setText(data)
+        
+        
+    def endSignal(self, data):
+        
+        self.planDialog.endText.setText(data)
+            
+            
     def closeEvent(self, event):
-        Main.JUDGE = False  
-        for window in QApplication.topLevelWidgets():
-            if window.objectName() != "Main":
-                window.deleteLater()
         event.accept()
+        
+        
+        
+class error(QtWidgets.QDialog):
+    
+    def __init__(self):
+        
+        global ERROR
+
+        super().__init__()
+        self.errorDialog = uic.loadUi(Producer.route.resourcePath("window/ui/error.ui"), self)
+        
+        self.errorDialog.error.setText(ERROR)

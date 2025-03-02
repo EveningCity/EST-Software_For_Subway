@@ -141,9 +141,9 @@ class searched_dialog(QtWidgets.QDialog):
     
     def subTitle(self, lst):
         
-        if len(lst) != 3:
-            self.searchedDialog.subNameChinese.setText(Producer.ruleText.betterChinese(lst[3]))
-            self.searchedDialog.subNameEnglish.setText(f"({Producer.ruleText.betterEnglish(lst[4])})")
+        if len(lst) != 2:
+            self.searchedDialog.subNameChinese.setText(Producer.ruleText.betterChinese(lst[2]))
+            self.searchedDialog.subNameEnglish.setText(f"({Producer.ruleText.betterEnglish(lst[3])})")
         else:
             self.searchedDialog.subNameChinese.setText(" ")
             self.searchedDialog.subNameEnglish.setText(" ")
@@ -178,16 +178,18 @@ class searched_dialog(QtWidgets.QDialog):
      
     def startClicked(self):
         
-        global STATION_START
         STATION_START = Search_Dialog.NAME[0]
-        Plan_Dialog.plan_dialog().show()
+        Dialog = Plan_Dialog.plan_dialog()
+        Dialog.show()
+        Dialog.fillAir([STATION_START, "Start"])
         
         
     def endClicked(self):
         
-        global STATION_END
         STATION_END = Search_Dialog.NAME[0]
-        Plan_Dialog.plan_dialog().show()
+        Dialog = Plan_Dialog.plan_dialog()
+        Dialog.show()
+        Dialog.fillAir([STATION_END, "End"])
         
         
     def loadPic(self):
@@ -255,6 +257,10 @@ class searched_dialog(QtWidgets.QDialog):
         for line_and_number in line_and_number_list:
             END = False
             Y = False
+            
+            for direct_line in Data.DIRECT_LINE_LIST:
+                if line_and_number[0] == direct_line[0]:
+                    END = True
             
             if len(line_and_number[0]) == 1:
                 Line = f"0{line_and_number[0]}"

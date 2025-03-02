@@ -54,7 +54,7 @@ class sure(QtWidgets.QDialog):
                     all_files = zip.infolist()
                     for fi in all_files:
                         fi_name = fi.filename
-                        if fi_name.startswith("stations/") and fi_name.lower().endswith((".png","jpg","jpeg")):
+                        if fi_name.startswith("stations/") and fi_name.lower().endswith((".png",".jpg",".jpeg",".txt")):
                             temp_path = zip.extract(fi, path=Producer.route.resourcePath("data/stations/"))
                             shutil.move(temp_path, os.path.join(Producer.route.resourcePath("data/stations/"), os.path.basename(fi.filename)))
                             shutil.rmtree(Producer.route.resourcePath("data/stations/stations/"))
@@ -127,6 +127,7 @@ BELOW_ZERO_DIRECTION = {}
 TIME_DICT = {}
 RGB_DICT = {}
 BRANCH_LINE_LIST = {}
+DIRECT_LINE_LIST = {}
             """.format(
                 dict.get("pack_name"),
                 dict.get("uuid"),
@@ -136,7 +137,8 @@ BRANCH_LINE_LIST = {}
                 dict.get("below"),
                 dict.get("time"),
                 dict.get("color"),
-                dict.get("branch_lines"))
+                dict.get("branch_lines"),
+                dict.get("direct_lines"))
             
             for every_class,line_station in dict.get("lines").items():
                 line_code = """

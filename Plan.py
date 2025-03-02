@@ -1,6 +1,29 @@
 import copy
+import importlib
 import itertools
+import os
+import sys
 import Producer
+
+
+def resourcePath(relative_path):
+        """获取资源的绝对路径，适用于Dev和PyInstaller"""
+        
+        try:
+            # PyInstaller 会创建一个临时文件夹并将路径存储在 _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+    
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+Data = load("Data",resourcePath("data/Data.py"))
 
 class plan:
     """查找线路"""
@@ -10,6 +33,7 @@ class plan:
         
         result = {}
         direction = []
+        difference_list_abs = []
         NUM = 0
         
         same_line_list = list(set(start_line_list) & set(end_line_list))
@@ -18,17 +42,49 @@ class plan:
             
             NUM = NUM + 1
             
-            start_result = [sublist_1[1:] for sublist_1 in start_line_and_number if sublist_1[0] in [same_line]]
-            end_result = [sublist_2[1:] for sublist_2 in end_line_and_number if sublist_2[0] in [same_line]]
-        
-            for START,END in itertools.product(start_result,end_result):
-                difference_list = [abs(num) for num in [a - b for a,b in zip(START,END)]] # 对两个列表中的对应元素进行减法和绝对值化操作
-                min_number = min(difference_list)
+            for direct_line in Data.DIRECT_LINE_LIST:
+            
+                if same_line in direct_line[0]:
+                    
+                    start_result_direct = [sublist_1[1:] for sublist_1 in start_line_and_number if sublist_1[0] in [same_line]][0]
+                    end_result_direct = [sublist_2[1:] for sublist_2 in end_line_and_number if sublist_2[0] in [same_line]][0]
+                    
+                    direct_servel = []
+                    for direct_servel_start, direct_servel_end in itertools.product(start_result_direct, end_result_direct):
+                        if direct_servel_start != 0 and direct_servel_end != 0:
+                            if direct_servel_start - direct_servel_end < 0:
+                                direct_servel.append([direct_servel_start,direct_servel_end])
+                    
+                    if len(direct_servel) != 0:
+                        diffs = [abs(a-b) for a,b in direct_servel]
+                        min_diff = min(diffs)
+                        index = diffs.index(min_diff)
+                        number = abs(direct_servel[index][0] - direct_servel[index][1])
+                        difference_list_abs.append(number)
+                        
+                    else:
+                        number = abs(max(start_result_direct) - max(Producer.route.getMaxNumber(same_line))) + [x for x in end_result_direct if x != 0][0] - 1
+                        difference_list_abs.append(number)
+                
+                else:
+                    
+                    start_result = [sublist_1[1:] for sublist_1 in start_line_and_number if sublist_1[0] in [same_line]]
+                    end_result = [sublist_2[1:] for sublist_2 in end_line_and_number if sublist_2[0] in [same_line]]
+                
+                    for START,END in itertools.product(start_result,end_result):
+                        difference_list = [num for num in [a - b for a,b in zip(START,END)]] # 对两个列表中的对应元素进行减法
+                        difference_list_abs.append([abs(num) for num in difference_list][0])
+            
+            min_number = min(difference_list_abs)
             
             Start = Producer.route.findStationByRouteAndnumberList(start_line_and_number)
             End = Producer.route.findStationByRouteAndnumberList(end_line_and_number)
             
-            direction.append(Producer.route.direction(same_line, [Start, End], min_number))
+            for direct_line in Data.DIRECT_LINE_LIST:
+                if same_line == direct_line[0]:
+                    direction.append(direct_line[-1])
+                else:
+                    direction.append(Producer.route.direction(same_line, [Start, End], min_number))
             direction.append(0)
             
             line_list = [same_line, same_line]
@@ -79,6 +135,10 @@ class plan:
             
             while True:
                 NUM = NUM +1
+                
+                #设定允许换乘的最大次数+1值：
+                if NUM == 30:
+                    return(None)
                 
                 for item in Producer.route.flatten(
                     Producer.route.filterStr(
@@ -372,15 +432,42 @@ class plan:
                     
                     forward_line_and_number = need_list[2]
                     backward_line_and_number = need_list[3]
-
-                    forward_result = [sublist_1[1:] for sublist_1 in forward_line_and_number if sublist_1[0] in [same_route]]
-                    backward_result = [sublist_2[1:] for sublist_2 in backward_line_and_number if sublist_2[0] in [same_route]]
                     
-                    for FORWARD,BACKWARD in itertools.product(forward_result,backward_result):
-                        difference_list = [abs(num) for num in [a - b for a,b in zip(FORWARD,BACKWARD)]] # 对两个列表中的对应元素进行减法和绝对值化操作
-                        min_number = min(difference_list)
-                        
-                        number_list.append(min_number)
+                    for direct_line in Data.DIRECT_LINE_LIST:
+        
+                        if same_route == direct_line[0]:
+                    
+                            start_result_direct = [sublist_1[1:] for sublist_1 in forward_line_and_number if sublist_1[0] in [same_route]][0]
+                            end_result_direct = [sublist_2[1:] for sublist_2 in backward_line_and_number if sublist_2[0] in [same_route]][0]
+                            
+                            direct_servel = []
+                            for direct_servel_start, direct_servel_end in itertools.product(start_result_direct, end_result_direct):
+                                if direct_servel_start != 0 and direct_servel_end != 0:
+                                    if direct_servel_start - direct_servel_end < 0:
+                                        direct_servel.append([direct_servel_start,direct_servel_end])
+                            
+                            if len(direct_servel) != 0:
+                                diffs = [abs(a-b) for a,b in direct_servel]
+                                min_diff = min(diffs)
+                                index = diffs.index(min_diff)
+                                number = abs(direct_servel[index][0] - direct_servel[index][1])
+                                number_list.append(number)
+                                
+                                
+                            else:
+                                number = abs(max(start_result_direct) - max(Producer.route.getMaxNumber(same_route))) + [x for x in end_result_direct if x != 0][0] - 1
+                                number_list.append(number)
+                            
+                        else:
+
+                            forward_result = [sublist_1[1:] for sublist_1 in forward_line_and_number if sublist_1[0] in [same_route]]
+                            backward_result = [sublist_2[1:] for sublist_2 in backward_line_and_number if sublist_2[0] in [same_route]]
+                            
+                            for FORWARD,BACKWARD in itertools.product(forward_result,backward_result):
+                                difference_list = [abs(num) for num in [a - b for a,b in zip(FORWARD,BACKWARD)]] # 对两个列表中的对应元素进行减法和绝对值化操作
+                                min_number = min(difference_list)
+                                
+                                number_list.append(min_number)
                         
                 if PLAN_number_KEY not in all_numbers_clear:
                     all_numbers_clear[PLAN_number_KEY] = [number_list]
@@ -475,8 +562,12 @@ class plan:
                 pair = [servel_names_plan[i:i + 2] for i in range(len(servel_names_plan) - 1)]
                 
                 for servel_number,pair_element,servel_route in zip(servel_numbers_plan, pair, routes_plan):
-                
-                    direction.append(Producer.route.direction(servel_route, pair_element, servel_number))
+                    
+                    for direct_line in Data.DIRECT_LINE_LIST:
+                        if servel_route == direct_line[0]:
+                            direction.append(direct_line[-1])
+                        else:
+                            direction.append(Producer.route.direction(servel_route, pair_element, servel_number))
                     
                 direction.append(0)
                 servel_numbers_plan.append(0)

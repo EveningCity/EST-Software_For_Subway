@@ -2,14 +2,13 @@ import importlib
 import itertools
 import os
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QFrame, QSizePolicy, QGroupBox, QHBoxLayout
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QFrame, QSizePolicy, QGroupBox, QHBoxLayout, QWidget, QApplication
 from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 
-import Producer, window.Plan_Dialog as Plan_Dialog, window.Route_Dialog as Route_Dialog, window.Search_Plan_Dialog as Search_Plan_Dialog
+import Producer, window.Search_Plan_Dialog as Search_Plan_Dialog
 
 
-END_DATA = None
 STATION = None
 
 def load(name, path):
@@ -22,22 +21,26 @@ Data = load("Data",Producer.route.resourcePath("data/Data.py"))
 
 class searched_start_dialog(QtWidgets.QDialog):
     
-    def __init__(self):
+    signal = pyqtSignal(str)
+    
+    def __init__(self, NAME):
         
         self.num = 0
+        
+        self.NAME = NAME
         
         super().__init__()
         self.searchedDialog = uic.loadUi(Producer.route.resourcePath("window/ui/start_dialog.ui"), self)
         
-        self.searchedDialog.nameChinese.setText(Producer.ruleText.betterChinese(Search_Plan_Dialog.NAME[0]))
-        self.searchedDialog.nameEnglish.setText(Producer.ruleText.betterEnglish(Search_Plan_Dialog.NAME[1]))
-        self.subTitle(Search_Plan_Dialog.NAME)
+        self.searchedDialog.nameChinese.setText(Producer.ruleText.betterChinese(self.NAME[0]))
+        self.searchedDialog.nameEnglish.setText(Producer.ruleText.betterEnglish(self.NAME[1]))
+        self.subTitle(self.NAME)
         
         self.number_1.setAlignment(Qt.AlignCenter)
         self.number_1.setSpacing(6)
         self.number_2.setAlignment(Qt.AlignCenter)
         self.number_2.setSpacing(6)
-        self.numberSet(Search_Plan_Dialog.NAME[0])
+        self.numberSet(self.NAME[0])
         
         self.searchedDialog.start.clicked.connect(self.startClicked)
         
@@ -74,7 +77,7 @@ class searched_start_dialog(QtWidgets.QDialog):
         
         num = 0
         
-        for servel_route in Producer.route.stationRouteServel(Search_Plan_Dialog.NAME[0]):
+        for servel_route in Producer.route.stationRouteServel(self.NAME[0]):
             
             route = QLabel(f"Route{num}")
             route.setText(f" {Producer.ruleText.formatLineList([servel_route])[0]} ")  
@@ -108,7 +111,7 @@ class searched_start_dialog(QtWidgets.QDialog):
             
     def addstationView(self):
         
-        name = Search_Plan_Dialog.NAME[1]
+        name = self.NAME[1]
         for des in Data.DESCRIPTION:
             if des[0] == name:
                 n = QLabel("Station")
@@ -128,9 +131,9 @@ class searched_start_dialog(QtWidgets.QDialog):
         
     def subTitle(self, lst):
         
-        if len(lst) != 3:
-            self.searchedDialog.subNameChinese.setText(Producer.ruleText.betterChinese(lst[3]))
-            self.searchedDialog.subNameEnglish.setText(f"({Producer.ruleText.betterEnglish(lst[4])})")
+        if len(lst) != 2:
+            self.searchedDialog.subNameChinese.setText(Producer.ruleText.betterChinese(lst[2]))
+            self.searchedDialog.subNameEnglish.setText(f"({Producer.ruleText.betterEnglish(lst[3])})")
         else:
             self.searchedDialog.subNameChinese.setText(" ")
             self.searchedDialog.subNameEnglish.setText(" ")
@@ -153,9 +156,16 @@ class searched_start_dialog(QtWidgets.QDialog):
     def startClicked(self):
         
         global STATION, END_DATA
-        STATION = Search_Plan_Dialog.NAME[0]
-        END_DATA = Search_Plan_Dialog.END_DATA
-        Plan_Dialog.plan_dialog().show()
+        STATION = self.NAME[0]
+        
+        self.signal.emit(STATION)
+        Search_Plan_Dialog.search_plan_dialog().close()
+        
+        top_level_windows = QApplication.topLevelWidgets()
+        for window in top_level_windows:
+            if window.objectName() != "Main" and window.objectName() != "Plan":
+                window.close()  # 关闭窗口
+
            
            
     def loadPic(self):
@@ -165,7 +175,7 @@ class searched_start_dialog(QtWidgets.QDialog):
             file_path = os.path.join(Producer.route.resourcePath("data/stations/"), filename)
             if os.path.isfile(file_path):
                 files_name_list.append(filename)
-            if filename.replace(".png", "").replace(".jpg", "").replace(".jpeg", "")  == Search_Plan_Dialog.NAME[1]:
+            if filename.replace(".png", "").replace(".jpg", "").replace(".jpeg", "")  == self.NAME[1]:
                 self.label = QLabel()
                 self.label.setAlignment(Qt.AlignCenter)
                 self.label.setWordWrap(True)
@@ -223,6 +233,10 @@ class searched_start_dialog(QtWidgets.QDialog):
         for line_and_number in line_and_number_list:
             END = False
             Y = False
+            
+            for direct_line in Data.DIRECT_LINE_LIST:
+                if line_and_number[0] == direct_line[0]:
+                    END = True
             
             if len(line_and_number[0]) == 1:
                 Line = f"0{line_and_number[0]}"
